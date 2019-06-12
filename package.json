@@ -1,0 +1,26 @@
+{
+  "name": "@dhis2/prop-types",
+  "version": "1.0.0",
+  "main": "./build/cjs/index.js",
+  "module": "./build/es/index.js",
+  "sideEffects": false,
+  "repository": "https://github.com/dhis2/prop-types.git",
+  "author": "Jan-Gerke Salomon <jgs.salomon@gmail.com>",
+  "license": "BSD-3-Clause",
+  "private": false,
+  "scripts": {
+    "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir ./build/cjs --copy-files --verbose",
+    "build:modules": "BABEL_ENV=modules babel src --out-dir ./build/es --copy-files --verbose",
+    "build": "NODE_ENV=production yarn build:commonjs && NODE_ENV=production yarn build:modules"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.1.6",
+    "babel-loader": "^8.0.5",
+    "husky": "^1.0.1"
+  },
+  "peerDependencies": {
+    "prop-types": "^15"
+  }
+}
