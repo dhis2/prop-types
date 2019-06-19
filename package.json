@@ -9,6 +9,7 @@
   "license": "BSD-3-Clause",
   "private": false,
   "scripts": {
+    "prebuild": "rm -rf ./build/**",
     "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir ./build/cjs --copy-files --verbose",
     "build:modules": "BABEL_ENV=modules babel src --out-dir ./build/es --copy-files --verbose",
     "build": "NODE_ENV=production yarn build:commonjs && NODE_ENV=production yarn build:modules",
