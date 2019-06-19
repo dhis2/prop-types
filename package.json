@@ -11,16 +11,24 @@
   "scripts": {
     "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir ./build/cjs --copy-files --verbose",
     "build:modules": "BABEL_ENV=modules babel src --out-dir ./build/es --copy-files --verbose",
-    "build": "NODE_ENV=production yarn build:commonjs && NODE_ENV=production yarn build:modules"
+    "build": "NODE_ENV=production yarn build:commonjs && NODE_ENV=production yarn build:modules",
+    "lint:style": "d2-style js check --all"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
     "@babel/preset-env": "^7.1.6",
+    "@dhis2/cli-style": "3.3.4",
     "babel-loader": "^8.0.5",
-    "husky": "^1.0.1"
+    "husky": "^2.4.1"
   },
   "peerDependencies": {
     "prop-types": "^15"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "d2-style commit check",
+      "pre-commit": "d2-style js apply"
+    }
   }
 }
