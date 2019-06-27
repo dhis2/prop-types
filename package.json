@@ -21,7 +21,7 @@
     "@babel/preset-env": "^7.1.6",
     "@dhis2/cli-style": "3.3.4",
     "babel-loader": "^8.0.5",
-    "husky": "^2.5.0"
+    "husky": "^2.6.0"
   },
   "peerDependencies": {
     "prop-types": "^15"
