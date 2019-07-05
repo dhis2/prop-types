@@ -17,8 +17,8 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.5.0",
+    "@babel/preset-env": "^7.5.0",
     "@babel/core": "^7.5.0",
-    "@babel/preset-env": "^7.1.6",
     "@dhis2/cli-style": "3.3.4",
     "babel-loader": "^8.0.5",
     "husky": "^3.0.0"
