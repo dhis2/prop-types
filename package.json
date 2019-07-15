@@ -19,7 +19,7 @@
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
-    "@dhis2/cli-style": "4.0.0",
+    "@dhis2/cli-style": "4.1.0",
     "babel-loader": "^8.0.5"
   },
   "peerDependencies": {
