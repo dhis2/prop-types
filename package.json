@@ -8,6 +8,9 @@
   "author": "Jan-Gerke Salomon <jgs.salomon@gmail.com>",
   "license": "BSD-3-Clause",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "prebuild": "rm -rf ./build/**",
     "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir ./build/cjs --copy-files --verbose",
