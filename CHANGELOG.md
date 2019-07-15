@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/dhis2/prop-types/compare/v1.0.0...v1.0.1) (2019-07-15)
+
+
+### Bug Fixes
+
+* update the publish configuration ([6c5a584](https://github.com/dhis2/prop-types/commit/6c5a584))
+
 # 1.0.0 (2019-07-15)
 
 
