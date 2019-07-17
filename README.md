@@ -2,6 +2,11 @@
 
 This package contains common prop types used across dhis2 apps and libraries.
 
+## Installation
+```bash
+yarn add @dhis2/prop-types
+```
+
 ## Usage
 
 Just import the propType that you'd like to use
