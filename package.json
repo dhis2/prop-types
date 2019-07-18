@@ -12,6 +12,7 @@
     "access": "public"
   },
   "scripts": {
+    "docs": "jsdoc2md -t jsdoc2md/README.hbs src/*.js > README.md; echo",
     "prebuild": "rm -rf ./build/**",
     "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir ./build/cjs --copy-files --verbose",
     "build:modules": "BABEL_ENV=modules babel src --out-dir ./build/es --copy-files --verbose",
@@ -22,7 +23,8 @@
     "@babel/cli": "^7.5.0",
     "@babel/core": "^7.5.4",
     "@babel/preset-env": "^7.5.4",
-    "@dhis2/cli-style": "4.1.0"
+    "@dhis2/cli-style": "4.1.0",
+    "jsdoc-to-markdown": "^5.0.0"
   },
   "peerDependencies": {
     "prop-types": "^15"
