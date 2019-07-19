@@ -47,7 +47,27 @@ const arrayWithLengthFactory = ({
     return null
 }
 
-export const arrayWithLength = (min, max, propType) => {
+/**
+ * Ensure the prop value is an array with a length between a minimum and maximum.
+ * If a third `propType` argument is passed each item in the array needs to be of that prop-type
+ * @param {number} [min=0] - The minimal array length
+ * @param {number} [max=Infinity] - The maximal array length
+ * @param {function} [propType] - The prop-type that each array item needs to conform to
+ * @return {Error|null} Returns null if all conditions are met, or an error
+ * @example
+ * import React from 'react'
+ * import { arrayWithLength } from '@dhis2/prop-types'
+ *
+ * const LotsOfLists = props => <div {...props}>Does nothing</div>
+ *
+ * LotsOfLists.propTypes = {
+ *     arrayWithMaxThreeNumbers: arrayWithLength(0, 3, propTypes.number),
+ *     arrayWithAtLeastSixStrings: arrayWithLength(6, undefined, propTypes.string),
+ *     arrayWithAtLeastTenItems: arrayWithLength(10),
+ *     mandatoryArrayBetweenOneAndTen: arrayWithLength(1,10).isRequired,
+ * }
+ */
+export function arrayWithLength(min, max, propType) {
     const fn = arrayWithLengthFactory({ min, max, propType, isRequired: false })
     fn.isRequired = arrayWithLengthFactory({
         min,

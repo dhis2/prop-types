@@ -27,7 +27,27 @@ const instanceOfComponentFactory = (Component, isRequired) => (
     return null
 }
 
-export const instanceOfComponent = Component => {
+/**
+ * Ensure the prop value is an instance of a certain component
+ * @param {function} Component - The component that is expected
+ * @return {Error|null} Returns null if all conditions are met, or an error
+ * @example
+ * import React from 'react'
+ * import { instanceOfComponent } from '@dhis2/prop-types'
+ * import { Button } from './Button'
+ *
+ * const ButtonWrap = ({ children }) => <div>{children}</div>
+ * // This would allow the ButtonWrap to be empty
+ * ButtonWrap.propTypes = {
+ *     children: instanceOfComponent(Button)
+ * }
+ *
+ * // Enforce presence of a Button instance
+ * ButtonWrap.propTypes = {
+ *     children: instanceOfComponent(Button).isRequired
+ * }
+ */
+export function instanceOfComponent(Component) {
     const fn = instanceOfComponentFactory(Component, false)
     fn.isRequired = instanceOfComponentFactory(Component, true)
     return fn
