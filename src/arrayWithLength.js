@@ -66,9 +66,8 @@ const arrayWithLengthFactory = ({
  *     arrayWithAtLeastTenItems: arrayWithLength(10),
  *     mandatoryArrayBetweenOneAndTen: arrayWithLength(1,10).isRequired,
  * }
- * @function
  */
-export const arrayWithLength = (min, max, propType) => {
+export function arrayWithLength(min, max, propType) {
     const fn = arrayWithLengthFactory({ min, max, propType, isRequired: false })
     fn.isRequired = arrayWithLengthFactory({
         min,

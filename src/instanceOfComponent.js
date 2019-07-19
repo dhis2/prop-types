@@ -46,10 +46,8 @@ const instanceOfComponentFactory = (Component, isRequired) => (
  * ButtonWrap.propTypes = {
  *     children: instanceOfComponent(Button).isRequired
  * }
- * @function
  */
-
-export const instanceOfComponent = Component => {
+export function instanceOfComponent(Component) {
     const fn = instanceOfComponentFactory(Component, false)
     fn.isRequired = instanceOfComponentFactory(Component, true)
     return fn

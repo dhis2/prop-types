@@ -67,9 +67,8 @@ const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
  *     warning: statusPropType,
  *     success: statusPropType,
  * }
- * @function
  */
-export const mutuallyExclusive = (exlusivePropNames, propType) => {
+export function mutuallyExclusive(exlusivePropNames, propType) {
     const fn = mutuallyExclusiveFactory(exlusivePropNames, propType, false)
     fn.isRequired = mutuallyExclusiveFactory(exlusivePropNames, propType, true)
     return fn
