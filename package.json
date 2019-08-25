@@ -28,7 +28,7 @@
   },
   "peerDependencies": {
     "prop-types": "^15",
-    "react": "*"
+    "react": ">=15"
   },
   "files": [
     "build"
