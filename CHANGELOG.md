@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/dhis2/prop-types/compare/v1.0.3...v1.0.4) (2019-08-25)
+
+
+### Bug Fixes
+
+* add react as a peer dependency ([#33](https://github.com/dhis2/prop-types/issues/33)) ([88cb383](https://github.com/dhis2/prop-types/commit/88cb383))
+
 ## [1.0.3](https://github.com/dhis2/prop-types/compare/v1.0.2...v1.0.3) (2019-07-29)
 
 
