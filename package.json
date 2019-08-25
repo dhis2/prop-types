@@ -27,7 +27,8 @@
     "jsdoc-to-markdown": "^5.0.0"
   },
   "peerDependencies": {
-    "prop-types": "^15"
+    "prop-types": "^15",
+    "react": ">=15"
   },
   "files": [
     "build"
