@@ -10,6 +10,8 @@ const customPropTypes = {
     mutuallyExclusive,
 }
 
+export { arrayWithLength, instanceOfComponent, mutuallyExclusive }
+
 export default {
     ...propTypes,
     ...customPropTypes,
