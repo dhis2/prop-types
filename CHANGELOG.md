@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/dhis2/prop-types/compare/v1.0.4...v1.1.0) (2019-09-11)
+
+
+### Features
+
+* add custom prop types to propTypes object ([#39](https://github.com/dhis2/prop-types/issues/39)) ([e23ffb7](https://github.com/dhis2/prop-types/commit/e23ffb7))
+
 ## [1.0.4](https://github.com/dhis2/prop-types/compare/v1.0.3...v1.0.4) (2019-08-25)
 
 
