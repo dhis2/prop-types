@@ -20,9 +20,9 @@
     "lint:style": "d2-style js check --all"
   },
   "devDependencies": {
-    "@babel/cli": "^7.5.5",
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
+    "@babel/cli": "^7.6.0",
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
     "@dhis2/cli-style": "4.1.1",
     "jsdoc-to-markdown": "^5.0.1"
   },
