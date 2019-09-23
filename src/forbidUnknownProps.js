@@ -3,26 +3,26 @@
  * have been passed tot the component
  * @param {object} propTypes - The prop-types definition of the component
  * @return {Object} Returns a copy of the original prop-types object with an appended
- * property `forbidUnknowProps`, which is a prop-types validator that will return an error
+ * property `whitelistProps`, which is a prop-types validator that will return an error
  * if props have been added that the component that were not in the prop-types object
  * @example
  * import React from 'react'
  * import propTypes from '@dhis2/prop-types'
  *
  * const MyComponent = ({ score, maxScore }) => <div>{score} out of {maxScore}</div>
- * MyComponent.propTypes = propTypes.forbidUnknowProps({
+ * MyComponent.propTypes = propTypes.whitelistProps({
  *     score: propTypes.number,
  *     maxScore: propTypes.number,
  * })
  *
- * Note: `forbidUnknowProps` is different from the `exact` method form the standard
- * prop-types library, because `forbidUnknowProps` is meant to be applied on a full component
+ * Note: `whitelistProps` is different from the `exact` method form the standard
+ * prop-types library, because `whitelistProps` is meant to be applied on a full component
  * prop-type definition, while `exact` is meant to be a applied on an individual prop-type
  */
 
-const forbidUnknowProps = propTypes => ({
+const whitelistProps = propTypes => ({
     ...propTypes,
-    forbidUnknowProps: (props, _, componentName) => {
+    whitelistProps: (props, _, componentName) => {
         const unknownProps = Object.keys(props).filter(
             propKey => !propTypes[propKey]
         )
@@ -34,4 +34,4 @@ const forbidUnknowProps = propTypes => ({
     },
 })
 
-export { forbidUnknowProps }
+export { whitelistProps }

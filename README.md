@@ -16,7 +16,7 @@ yarn add @dhis2/prop-types
 <dd><p>Ensure the prop value is an array with a length between a minimum and maximum.
 If a third <code>propType</code> argument is passed each item in the array needs to be of that prop-type</p>
 </dd>
-<dt><a href="#forbidUnknowProps">forbidUnknowProps(propTypes)</a> ⇒ <code>Object</code></dt>
+<dt><a href="#whitelistProps">whitelistProps(propTypes)</a> ⇒ <code>Object</code></dt>
 <dd><p>Ensure that no other props, apart from the ones in the prop-types definition
 have been passed tot the component</p>
 </dd>
@@ -58,15 +58,15 @@ LotsOfLists.propTypes = {
     mandatoryArrayBetweenOneAndTen: arrayWithLength(1,10).isRequired,
 }
 ```
-<a name="forbidUnknowProps"></a>
+<a name="whitelistProps"></a>
 
-## forbidUnknowProps(propTypes) ⇒ <code>Object</code>
+## whitelistProps(propTypes) ⇒ <code>Object</code>
 Ensure that no other props, apart from the ones in the prop-types definition
 have been passed tot the component
 
 **Kind**: global function  
 **Returns**: <code>Object</code> - Returns a copy of the original prop-types object with an appended
-property `forbidUnknowProps`, which is a prop-types validator that will return an error
+property `whitelistProps`, which is a prop-types validator that will return an error
 if props have been added that the component that were not in the prop-types object  
 
 | Param | Type | Description |
@@ -79,13 +79,13 @@ import React from 'react'
 import propTypes from '@dhis2/prop-types'
 
 const MyComponent = ({ score, maxScore }) => <div>{score} out of {maxScore}</div>
-MyComponent.propTypes = propTypes.forbidUnknowProps({
+MyComponent.propTypes = propTypes.whitelistProps({
     score: propTypes.number,
     maxScore: propTypes.number,
 })
 
-Note: `forbidUnknowProps` is different from the `exact` method form the standard
-prop-types library, because `forbidUnknowProps` is meant to be applied on a full component
+Note: `whitelistProps` is different from the `exact` method form the standard
+prop-types library, because `whitelistProps` is meant to be applied on a full component
 prop-type definition, while `exact` is meant to be a applied on an individual prop-type
 ```
 <a name="instanceOfComponent"></a>

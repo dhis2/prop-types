@@ -1,20 +1,20 @@
 import propTypes from 'prop-types'
 
 import { arrayWithLength } from './arrayWithLength.js'
-import { forbidUnknowProps } from './forbidUnknowProps.js'
+import { whitelistProps } from './whitelistProps.js'
 import { instanceOfComponent } from './instanceOfComponent.js'
 import { mutuallyExclusive } from './mutuallyExclusive.js'
 
 const customPropTypes = {
     arrayWithLength,
-    forbidUnknowProps,
+    whitelistProps,
     instanceOfComponent,
     mutuallyExclusive,
 }
 
 export {
     arrayWithLength,
-    forbidUnknowProps,
+    whitelistProps,
     instanceOfComponent,
     mutuallyExclusive,
 }
