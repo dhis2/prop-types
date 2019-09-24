@@ -19,6 +19,9 @@
     "build": "NODE_ENV=production yarn build:commonjs && NODE_ENV=production yarn build:modules",
     "lint:style": "d2-style js check --all"
   },
+  "dependencies": {
+    "prop-types": "^15"
+  },
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
@@ -27,7 +30,6 @@
     "jsdoc-to-markdown": "^5.0.1"
   },
   "peerDependencies": {
-    "prop-types": "^15",
     "react": ">=15"
   },
   "files": [
