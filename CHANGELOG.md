@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/dhis2/prop-types/compare/v1.1.0...v1.1.1) (2019-09-24)
+
+
+### Bug Fixes
+
+* **docs:** build docs on pre-commit ([#51](https://github.com/dhis2/prop-types/issues/51)) ([a9a0491](https://github.com/dhis2/prop-types/commit/a9a0491))
+
 # [1.1.0](https://github.com/dhis2/prop-types/compare/v1.0.4...v1.1.0) (2019-09-11)
 
 
