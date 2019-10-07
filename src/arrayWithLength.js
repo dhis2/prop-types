@@ -5,28 +5,36 @@ const arrayWithLengthFactory = ({
     max = Infinity,
     propType,
     isRequired,
-}) => (props, propName, componentName) => {
-    const arr = props[propName]
+}) => (
+    props,
+    propSelector, // normally a propName, but when wrapped in arrayOf an index
+    componentName,
+    _location,
+    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
+) => {
+    const arr = props[propSelector]
+    const propName = propFullName || propSelector
+    const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
 
     if (isRequired && typeof arr === 'undefined') {
-        return new Error(`${propName} is required.`)
+        return new Error(
+            `${baseMsg} this prop is required but no value was found.`
+        )
     }
 
     if (arr && !Array.isArray(arr)) {
-        return new Error(`${propName} is not an array.`)
+        return new Error(`${baseMsg} prop value is not an array.`)
     }
 
     if (arr && arr.length > max) {
         return new Error(
-            // prettier-ignore
-            `${propName} array has a length of ${arr.length}, but the maximum is ${max}`
+            `${baseMsg} array has a length of ${arr.length}, but the maximum is ${max}`
         )
     }
 
     if (arr && arr.length < min) {
         return new Error(
-            // prettier-ignore
-            `${propName} array has a length of ${arr.length}, but the minimum is ${min}`
+            `${baseMsg} array has a length of ${arr.length}, but the minimum is ${min}`
         )
     }
 

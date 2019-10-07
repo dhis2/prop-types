@@ -2,25 +2,46 @@ import React from 'react'
 
 const instanceOfComponentFactory = (Component, isRequired) => (
     props,
-    propName
+    propSelector, // normally a propName, but when wrapped in arrayOf an index
+    componentName,
+    _location,
+    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
-    const children = props[propName]
+    const children = props[propSelector]
+    const propName = propFullName || propSelector
     const count = React.Children.count(children)
+    const isWrappedInArrayOf = !!propFullName
+    const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+
+    if (isWrappedInArrayOf && count === 1 && children === '') {
+        // When mapping over an empty array to render components react will return ''
+        // So this is a valid case and should not produce an error
+        return null
+    }
 
     if (isRequired && count === 0) {
-        return new Error(`${propName} is required.`)
+        return new Error(
+            `${baseMsg} this is a required prop, but no component instance was found`
+        )
     }
 
     if (count > 1) {
         return new Error(
-            `Prop validator 'instanceOfComponent' expected 1 component instance, instead found ${count}.`
+            `${baseMsg} expected 1 component instance, instead found ${count}.`
         )
     }
 
     if (children.type !== Component) {
-        const componentName = Component.name || Component.displayName
+        const expectedComponent =
+            typeof Component === 'string'
+                ? Component
+                : Component.name || Component.displayName
+        const foundComponent =
+            typeof children.type === 'string' // native elements
+                ? children.type
+                : children.type.name || children.type.displayName
         return new Error(
-            `Child at index ${propName} is not an instance of component ${componentName}.`
+            `${baseMsg} expected an instance of \`${expectedComponent}\` but found an instance of \`${foundComponent}\`.`
         )
     }
 

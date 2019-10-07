@@ -2,17 +2,33 @@ import propTypes from 'prop-types'
 
 const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
     props,
-    propName,
-    componentName
+    propSelector, // normally a propName, but when wrapped in arrayOf an index
+    componentName,
+    _location,
+    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
-    if (exlusivePropNames.length === 0) {
+    const propName = propFullName || propSelector
+    const isWrappedInArrayOf = !!propFullName
+    const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+
+    // Usage errors
+    if (isWrappedInArrayOf) {
         return new Error(
-            `mutuallyExclusive was called without any arguments for property '${propName}'.`
+            `mutuallyExclusive is being wrapped in \`arrayOf\` for property \`${propName}\` on component \`${componentName}\`. This is not supported.`
         )
     }
 
+    if (exlusivePropNames.length === 0) {
+        return new Error(
+            `mutuallyExclusive was called without any arguments for property \`${propName}\` on component \`${componentName}\`. Please add the required arguments.`
+        )
+    }
+
+    // Validation errors
     if (isRequired && typeof props[propName] === 'undefined') {
-        return new Error(`${propName} is required.`)
+        return new Error(
+            `${baseMsg} this prop is required but no value was found.`
+        )
     }
 
     // This is how to programatically invoke a propTypes check
@@ -33,7 +49,7 @@ const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
 
         if (thruthySiblingPropName) {
             return new Error(
-                `Property '${propName}' is mutually exclusive with '${thruthySiblingPropName}', but both have a value.`
+                `${baseMsg} Property '${propName}' is mutually exclusive with '${thruthySiblingPropName}', but both have a thruthy value.`
             )
         }
     }
