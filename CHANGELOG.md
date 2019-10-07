@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/dhis2/prop-types/compare/v1.1.1...v1.2.0) (2019-10-07)
+
+
+### Features
+
+* messages and instanceOfComponent when wrapped in `arrayOf` ([#56](https://github.com/dhis2/prop-types/issues/56)) ([e7a2355](https://github.com/dhis2/prop-types/commit/e7a2355))
+
 ## [1.1.1](https://github.com/dhis2/prop-types/compare/v1.1.0...v1.1.1) (2019-09-24)
 
 
