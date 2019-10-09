@@ -9,26 +9,26 @@ const instanceOfComponentFactory = (Component, isRequired) => (
 ) => {
     const children = props[propSelector]
     const propName = propFullName || propSelector
-    const count = React.Children.count(children)
-    const isWrappedInArrayOf = !!propFullName
     const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
 
-    if (isWrappedInArrayOf && count === 1 && children === '') {
-        // When mapping over an empty array to render components react will return ''
-        // So this is a valid case and should not produce an error
-        return null
-    }
-
-    if (isRequired && count === 0) {
+    if (Array.isArray(children)) {
         return new Error(
-            `${baseMsg} this is a required prop, but no component instance was found`
+            `${baseMsg} expected a single component instance but received an array.`
         )
     }
 
-    if (count > 1) {
-        return new Error(
-            `${baseMsg} expected 1 component instance, instead found ${count}.`
-        )
+    if (!children) {
+        if (isRequired) {
+            return new Error(
+                `${baseMsg} this is a required property but its value is \`${children}\`.`
+            )
+        } else {
+            return null
+        }
+    }
+
+    if (!React.isValidElement(children)) {
+        return new Error(`${baseMsg} not a valid React element.`)
     }
 
     if (children.type !== Component) {

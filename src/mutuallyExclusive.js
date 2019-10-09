@@ -8,16 +8,9 @@ const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
     propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
     const propName = propFullName || propSelector
-    const isWrappedInArrayOf = !!propFullName
     const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
 
     // Usage errors
-    if (isWrappedInArrayOf) {
-        return new Error(
-            `mutuallyExclusive is being wrapped in \`arrayOf\` for property \`${propName}\` on component \`${componentName}\`. This is not supported.`
-        )
-    }
-
     if (exlusivePropNames.length === 0) {
         return new Error(
             `mutuallyExclusive was called without any arguments for property \`${propName}\` on component \`${componentName}\`. Please add the required arguments.`
