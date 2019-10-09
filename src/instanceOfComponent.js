@@ -1,5 +1,3 @@
-import React from 'react'
-
 const instanceOfComponentFactory = (Component, isRequired) => (
     props,
     propSelector, // normally a propName, but when wrapped in arrayOf an index
@@ -7,41 +5,45 @@ const instanceOfComponentFactory = (Component, isRequired) => (
     _location,
     propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
-    const children = props[propSelector]
+    const child = props[propSelector]
     const propName = propFullName || propSelector
+    const hasRenderableChild = child === 0 || !!child
     const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
 
-    if (Array.isArray(children)) {
+    if (Array.isArray(child)) {
         return new Error(
             `${baseMsg} expected a single component instance but received an array.`
         )
     }
 
-    if (!children) {
+    if (!hasRenderableChild) {
         if (isRequired) {
             return new Error(
-                `${baseMsg} this is a required property but its value is \`${children}\`.`
+                `${baseMsg} this is a required property but its value is \`${child}\`.`
             )
         } else {
             return null
         }
     }
 
-    if (!React.isValidElement(children)) {
-        return new Error(`${baseMsg} not a valid React element.`)
+    const expectedComponentName =
+        typeof Component === 'string'
+            ? Component
+            : Component.name || Component.displayName
+    const foundComponentName =
+        typeof child.type !== 'string'
+            ? child.type
+            : child.type && (child.type.name || child.type.displayName)
+
+    if (!foundComponentName) {
+        return new Error(
+            `${baseMsg} could not read component name. Property value does not look like a component instance.`
+        )
     }
 
-    if (children.type !== Component) {
-        const expectedComponent =
-            typeof Component === 'string'
-                ? Component
-                : Component.name || Component.displayName
-        const foundComponent =
-            typeof children.type === 'string' // native elements
-                ? children.type
-                : children.type.name || children.type.displayName
+    if (child.type !== Component) {
         return new Error(
-            `${baseMsg} expected an instance of \`${expectedComponent}\` but found an instance of \`${foundComponent}\`.`
+            `${baseMsg} expected an instance of \`${expectedComponentName}\` but found an instance of \`${foundComponentName}\`.`
         )
     }
 
