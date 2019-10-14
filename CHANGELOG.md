@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/dhis2/prop-types/compare/v1.2.0...v1.2.1) (2019-10-14)
+
+
+### Bug Fixes
+
+* improve instanceOfComponent robustness and remove incorrect logic ([#60](https://github.com/dhis2/prop-types/issues/60)) ([7273d7b](https://github.com/dhis2/prop-types/commit/7273d7ba535ebde0931f36e3f9f276ebb60ccc2a))
+
 # [1.2.0](https://github.com/dhis2/prop-types/compare/v1.1.1...v1.2.0) (2019-10-07)
 
 
