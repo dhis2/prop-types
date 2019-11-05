@@ -4,15 +4,9 @@ import { arrayWithLength } from './arrayWithLength.js'
 import { instanceOfComponent } from './instanceOfComponent.js'
 import { mutuallyExclusive } from './mutuallyExclusive.js'
 
-const customPropTypes = {
-    arrayWithLength,
-    instanceOfComponent,
-    mutuallyExclusive,
-}
+propTypes.arrayWithLength = arrayWithLength
+propTypes.instanceOfComponent = instanceOfComponent
+propTypes.mutuallyExclusive = mutuallyExclusive
 
 export { arrayWithLength, instanceOfComponent, mutuallyExclusive }
-
-export default {
-    ...propTypes,
-    ...customPropTypes,
-}
+export default propTypes
