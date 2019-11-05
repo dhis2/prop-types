@@ -1,3 +1,10 @@
+## [1.2.2](https://github.com/dhis2/prop-types/compare/v1.2.1...v1.2.2) (2019-11-05)
+
+
+### Bug Fixes
+
+* remove object rest/spread syntax because this breaks Edge ([#65](https://github.com/dhis2/prop-types/issues/65)) ([b84e654](https://github.com/dhis2/prop-types/commit/b84e6547f8d6f69619edb915be75ad2160ee8ffd))
+
 ## [1.2.1](https://github.com/dhis2/prop-types/compare/v1.2.0...v1.2.1) (2019-10-14)
 
 
