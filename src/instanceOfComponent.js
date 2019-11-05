@@ -52,7 +52,8 @@ const instanceOfComponentFactory = (Component, isRequired) => (
 
 /**
  * Ensure the prop value is an instance of a certain component
- * @param {function} Component - The component that is expected
+ * @param {function|string} Component - The component that is expected. Can either be a React component,
+ * or a string for built-in components, such as 'span', 'div', etc.
  * @return {Error|null} Returns null if all conditions are met, or an error
  * @example
  * import React from 'react'

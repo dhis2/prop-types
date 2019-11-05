@@ -64,7 +64,7 @@ Ensure the prop value is an instance of a certain component
 
 | Param | Type | Description |
 | --- | --- | --- |
-| Component | <code>function</code> | The component that is expected |
+| Component | <code>function</code> \| <code>string</code> | The component that is expected. Can either be a React component, or a string for built-in components, such as 'span', 'div', etc. |
 
 **Example**  
 ```js
