@@ -82,6 +82,11 @@ ButtonWrap.propTypes = {
 ButtonWrap.propTypes = {
     children: instanceOfComponent(Button).isRequired
 }
+
+// Enforce presence of a multiple children, all Button instances
+ButtonWrap.propTypes = {
+    children: proptypes.arrayOf(instanceOfComponent(Button)).isRequired
+}
 ```
 <a name="mutuallyExclusive"></a>
 
