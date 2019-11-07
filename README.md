@@ -149,9 +149,6 @@ const Test = ({ someBool, someString }) => (
 )
 Test.propTypes = {
     someBool: propTypes.bool,
-    someString: requiredIf(
-        ({ someBool, someString }) => someBool && !someString,
-        propTypes.string
-    ),
+    someString: requiredIf(props => props.someBool, propTypes.string),
 }
 ```
