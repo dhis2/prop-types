@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/dhis2/prop-types/compare/v1.2.2...v1.3.0) (2019-11-07)
+
+
+### Features
+
+* introduce requiredIf ([#73](https://github.com/dhis2/prop-types/issues/73)) ([b372d1b](https://github.com/dhis2/prop-types/commit/b372d1b87ac03f2eee9964274157e19985cb6928))
+
 ## [1.2.2](https://github.com/dhis2/prop-types/compare/v1.2.1...v1.2.2) (2019-11-05)
 
 
