@@ -24,8 +24,8 @@ If a third <code>propType</code> argument is passed each item in the array needs
 This function will also check if the current property value is of the specified type</p>
 </dd>
 <dt><a href="#requiredIf">requiredIf(siblingPropName)</a> ⇒ <code>Error</code> | <code>null</code></dt>
-<dd><p>Ensure the prop value is thruthy when a sibling prop also has a thruthy value,
-and ensure the prop is of the correct prop-type</p>
+<dd><p>Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
+also has a value, and ensure the prop is of the correct prop-type</p>
 </dd>
 </dl>
 
@@ -126,8 +126,8 @@ Alert.propTypes = {
 <a name="requiredIf"></a>
 
 ## requiredIf(siblingPropName) ⇒ <code>Error</code> \| <code>null</code>
-Ensure the prop value is thruthy when a sibling prop also has a thruthy value,
-and ensure the prop is of the correct prop-type
+Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
+also has a value, and ensure the prop is of the correct prop-type
 
 **Kind**: global function  
 **Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  

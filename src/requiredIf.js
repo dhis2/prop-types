@@ -1,5 +1,8 @@
 import propTypes from 'prop-types'
 
+const isEmpty = value =>
+    typeof value === 'undefined' || value === null || value === ''
+
 const requiredIfFactory = (siblingPropName, propType, isRequired) => (
     props,
     propSelector, // normally a propName, but when wrapped in arrayOf an index
@@ -8,8 +11,6 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
     propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
     const propName = propFullName || propSelector
-    const siblingPropValue = !!props[siblingPropName]
-    const propValue = props[propSelector]
 
     // Usage errors
     if (isRequired) {
@@ -19,9 +20,9 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
     }
 
     // Validation errors
-    if (siblingPropValue && !propValue) {
+    if (!isEmpty(props[siblingPropName]) && isEmpty(props[propSelector])) {
         return new Error(
-            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is required when \`${siblingPropName}\` is thruthy.`
+            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is required when \`${siblingPropName}\` has a value, but \`${propName}\` has value \`${props[propSelector]}\``
         )
     }
 
@@ -40,8 +41,8 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
 }
 
 /**
- * Ensure the prop value is thruthy when a sibling prop also has a thruthy value,
- * and ensure the prop is of the correct prop-type
+ * Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
+ * also has a value, and ensure the prop is of the correct prop-type
  * @param {string} siblingPropName - The name of the sibling prop
  * @return {Error|null} Returns null if all conditions are met, or an error
  * @example
