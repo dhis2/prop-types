@@ -23,6 +23,10 @@ If a third <code>propType</code> argument is passed each item in the array needs
 <dd><p>Ensure that only one property within a specified list is thruthy
 This function will also check if the current property value is of the specified type</p>
 </dd>
+<dt><a href="#requiredIf">requiredIf(siblingPropName)</a> ⇒ <code>Error</code> | <code>null</code></dt>
+<dd><p>Ensure the prop value is thruthy when a sibling prop also has a thruthy value,
+and ensure the prop is of the correct prop-type</p>
+</dd>
 </dl>
 
 <a name="arrayWithLength"></a>
@@ -117,5 +121,34 @@ Alert.propTypes = {
     danger: statusPropType,
     warning: statusPropType,
     success: statusPropType,
+}
+```
+<a name="requiredIf"></a>
+
+## requiredIf(siblingPropName) ⇒ <code>Error</code> \| <code>null</code>
+Ensure the prop value is thruthy when a sibling prop also has a thruthy value,
+and ensure the prop is of the correct prop-type
+
+**Kind**: global function  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| siblingPropName | <code>string</code> | The name of the sibling prop |
+
+**Example**  
+```js
+import React from 'react'
+import { propTypes } from '@dhis2/prop-types'
+
+const Test = ({ someBool, someString }) => (
+    <div>
+        <h1>someBool: {someBool ? 'true' : 'false'}</h1>
+        <h1>someString: {someString}</h1>
+    </div>
+)
+Test.propTypes = {
+    someBool: propTypes.bool,
+    someString: propTypes.requiredIf('someBool', propTypes.string),
 }
 ```
