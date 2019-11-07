@@ -74,8 +74,8 @@ const requiredIfFactory = (condition, propType, isRequired) => (
  * }
  */
 
-export function requiredIf(siblingPropName, propType) {
-    const fn = requiredIfFactory(siblingPropName, propType, false)
-    fn.isRequired = requiredIfFactory(siblingPropName, propType, true)
+export function requiredIf(condition, propType) {
+    const fn = requiredIfFactory(condition, propType, false)
+    fn.isRequired = requiredIfFactory(condition, propType, true)
     return fn
 }
