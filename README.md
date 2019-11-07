@@ -134,7 +134,7 @@ also has a value, and ensure the prop is of the correct prop-type
 
 | Param | Type | Description |
 | --- | --- | --- |
-| siblingPropName | <code>string</code> | The name of the sibling prop |
+| siblingPropName | <code>function</code> | The name of the sibling prop |
 
 **Example**  
 ```js
@@ -149,6 +149,9 @@ const Test = ({ someBool, someString }) => (
 )
 Test.propTypes = {
     someBool: propTypes.bool,
-    someString: propTypes.requiredIf('someBool', propTypes.string),
+    someString: requiredIf(
+        ({ someBool, someString }) => someBool && !someString,
+        propTypes.string
+    ),
 }
 ```

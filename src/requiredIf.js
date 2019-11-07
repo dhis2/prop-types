@@ -3,7 +3,7 @@ import propTypes from 'prop-types'
 const isEmpty = value =>
     typeof value === 'undefined' || value === null || value === ''
 
-const requiredIfFactory = (siblingPropName, propType, isRequired) => (
+const requiredIfFactory = (condition, propType, isRequired) => (
     props,
     propSelector, // normally a propName, but when wrapped in arrayOf an index
     componentName,
@@ -11,6 +11,7 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
     propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
     const propName = propFullName || propSelector
+    const propValue = props[propSelector]
 
     // Usage errors
     if (isRequired) {
@@ -19,10 +20,22 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
         )
     }
 
-    // Validation errors
-    if (!isEmpty(props[siblingPropName]) && isEmpty(props[propSelector])) {
+    if (typeof condition !== 'function') {
         return new Error(
-            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is required when \`${siblingPropName}\` has a value, but \`${propName}\` has value \`${props[propSelector]}\``
+            `The \`condition\` argument passed to the \`requiredIf\` prop-validator was not a function.`
+        )
+    }
+
+    if (typeof propType !== 'function') {
+        return new Error(
+            `The \`propType\` argument passed to the \`requiredIf\` prop-validator was not a function.`
+        )
+    }
+
+    // Validation errors
+    if (condition(props) && isEmpty(propValue)) {
+        return new Error(
+            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is conditionally required but has value \`${propValue}\`.`
         )
     }
 
@@ -43,7 +56,7 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
 /**
  * Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
  * also has a value, and ensure the prop is of the correct prop-type
- * @param {string} siblingPropName - The name of the sibling prop
+ * @param {function} siblingPropName - The name of the sibling prop
  * @return {Error|null} Returns null if all conditions are met, or an error
  * @example
  * import React from 'react'
@@ -57,9 +70,13 @@ const requiredIfFactory = (siblingPropName, propType, isRequired) => (
  * )
  * Test.propTypes = {
  *     someBool: propTypes.bool,
- *     someString: propTypes.requiredIf('someBool', propTypes.string),
+ *     someString: requiredIf(
+ *         ({ someBool, someString }) => someBool && !someString,
+ *         propTypes.string
+ *     ),
  * }
  */
+
 export function requiredIf(siblingPropName, propType) {
     const fn = requiredIfFactory(siblingPropName, propType, false)
     fn.isRequired = requiredIfFactory(siblingPropName, propType, true)
