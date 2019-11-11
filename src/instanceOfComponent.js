@@ -70,6 +70,11 @@ const instanceOfComponentFactory = (Component, isRequired) => (
  * ButtonWrap.propTypes = {
  *     children: instanceOfComponent(Button).isRequired
  * }
+ *
+ * // Enforce presence of a multiple children, all Button instances
+ * ButtonWrap.propTypes = {
+ *     children: proptypes.arrayOf(instanceOfComponent(Button)).isRequired
+ * }
  */
 export function instanceOfComponent(Component) {
     const fn = instanceOfComponentFactory(Component, false)
