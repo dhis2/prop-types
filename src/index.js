@@ -10,5 +10,5 @@ propTypes.instanceOfComponent = instanceOfComponent
 propTypes.mutuallyExclusive = mutuallyExclusive
 propTypes.requiredIf = requiredIf
 
-export { arrayWithLength, instanceOfComponent, mutuallyExclusive }
+export { arrayWithLength, instanceOfComponent, mutuallyExclusive, requiredIf }
 export default propTypes
