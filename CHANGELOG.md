@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/dhis2/prop-types/compare/v1.3.0...v1.4.0) (2019-11-21)
+
+
+### Features
+
+* **index js:** add requiredIf to named exports ([#75](https://github.com/dhis2/prop-types/issues/75)) ([cf6697e](https://github.com/dhis2/prop-types/commit/cf6697e6a213b76c8c047355149681339c2d92a5))
+
 # [1.3.0](https://github.com/dhis2/prop-types/compare/v1.2.2...v1.3.0) (2019-11-07)
 
 
