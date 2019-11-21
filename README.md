@@ -144,7 +144,7 @@ also has a value, and ensure the prop is of the correct prop-type
 **Example**  
 ```js
 import React from 'react'
-import { propTypes } from '@dhis2/prop-types'
+import { requiredIf } from '@dhis2/prop-types'
 
 const Test = ({ someBool, someString }) => (
     <div>

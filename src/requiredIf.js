@@ -60,7 +60,7 @@ const requiredIfFactory = (condition, propType, isRequired) => (
  * @return {Error|null} Returns null if all conditions are met, or an error
  * @example
  * import React from 'react'
- * import { propTypes } from '@dhis2/prop-types'
+ * import { requiredIf } from '@dhis2/prop-types'
  *
  * const Test = ({ someBool, someString }) => (
  *     <div>
