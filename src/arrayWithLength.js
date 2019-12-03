@@ -9,12 +9,13 @@ const arrayWithLengthFactory = ({
     props,
     propSelector, // normally a propName, but when wrapped in arrayOf an index
     componentName,
-    _location,
+    location,
     propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
 ) => {
     const arr = props[propSelector]
     const propName = propFullName || propSelector
     const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+    const insideArrayOf = !!propFullName
 
     if (isRequired && typeof arr === 'undefined') {
         return new Error(
@@ -39,17 +40,25 @@ const arrayWithLengthFactory = ({
     }
 
     if (arr && propType) {
-        const len = arr.length
-        for (let i = 0; i < len; i++) {
-            propTypes.checkPropTypes(
-                {
-                    [i]: propType,
-                },
-                arr,
-                propName,
-                componentName
-            )
-        }
+        const checkPropName = insideArrayOf ? location : propName
+        const checkPropType = insideArrayOf
+            ? // array should be array containing only the given type
+              propTypes.arrayOf(propTypes.arrayOf(propType))
+            : // array should contain only the given type
+              propTypes.arrayOf(propType)
+
+        const checkPropTypes = { [checkPropName]: checkPropType }
+        const checkProps = insideArrayOf ? { [location]: props } : props
+        // When not inside an array, the error message only reads correctly
+        // when using "prop"
+        const checkProp = insideArrayOf ? propName : 'prop'
+
+        propTypes.checkPropTypes(
+            checkPropTypes,
+            checkProps,
+            checkProp,
+            componentName
+        )
     }
 
     return null
