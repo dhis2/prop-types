@@ -32,7 +32,9 @@ const instanceOfComponentFactory = (Component, isRequired) => (
             : Component.name || Component.displayName
     const foundComponentName =
         typeof child.type !== 'string'
-            ? child.type
+            ? child.type && child.type.name
+                ? child.type.name
+                : child.type
             : child.type && (child.type.name || child.type.displayName)
 
     if (!foundComponentName) {
