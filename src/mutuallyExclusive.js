@@ -2,13 +2,11 @@ import propTypes from 'prop-types'
 
 const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
     props,
-    propSelector, // normally a propName, but when wrapped in arrayOf an index
-    componentName,
-    _location,
-    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
+    propName,
+    componentName
 ) => {
-    const propName = propFullName || propSelector
     const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+    const isDefined = typeof props[propName] !== 'undefined'
 
     // Usage errors
     if (exlusivePropNames.length === 0) {
@@ -18,7 +16,7 @@ const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
     }
 
     // Validation errors
-    if (isRequired && typeof props[propName] === 'undefined') {
+    if (isRequired && !isDefined) {
         return new Error(
             `${baseMsg} this prop is required but no value was found.`
         )
@@ -27,11 +25,9 @@ const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
     // This is how to programatically invoke a propTypes check
     // https://github.com/facebook/prop-types#proptypescheckproptypes
     propTypes.checkPropTypes(
-        {
-            [propName]: propType,
-        },
+        { [propName]: propType },
         props,
-        propName,
+        'prop',
         componentName
     )
 
