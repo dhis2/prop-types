@@ -2,9 +2,13 @@ module.exports = function(api) {
     api.cache.forever()
 
     let defaultPresets
+    const ignore = []
 
-    if (process.env.BABEL_ENV === 'modules') {
+    if (process.env.NODE_ENV === 'test') {
+        defaultPresets = ['@babel/preset-env', '@babel/preset-react']
+    } else if (process.env.BABEL_ENV === 'modules') {
         defaultPresets = []
+        ignore.push('**/*.test.js')
     } else {
         defaultPresets = [
             [
@@ -14,9 +18,11 @@ module.exports = function(api) {
                 },
             ],
         ]
+        ignore.push('**/*.test.js')
     }
 
     return {
         presets: defaultPresets,
+        ignore,
     }
 }
