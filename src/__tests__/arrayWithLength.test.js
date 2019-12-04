@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import { arrayWithLength } from '../arrayWithLength'
 
-const toWarning = message => `Warning: Failed foo type: ${message}`
+const toWarning = message => `Warning: Failed prop type: ${message}`
 
 describe('arrayWithLength', () => {
     jest.spyOn(console, 'error').mockImplementation(() => null)
@@ -16,7 +16,7 @@ describe('arrayWithLength', () => {
             propTypes.checkPropTypes(
                 { foo: validator },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -45,7 +45,7 @@ describe('arrayWithLength', () => {
             propTypes.checkPropTypes(
                 { foo: propType },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -77,7 +77,7 @@ describe('arrayWithLength', () => {
         it('returns an error when array items do not match propType', () => {
             props = { foo: [0, 1, 'foo'] }
             expectedMessage = toWarning(
-                'Invalid foo `foo[2]` of type `string` supplied to `TestComponent`, expected `number`.'
+                'Invalid prop `foo[2]` of type `string` supplied to `TestComponent`, expected `number`.'
             )
         })
 
@@ -97,7 +97,7 @@ describe('arrayWithLength', () => {
             propTypes.checkPropTypes(
                 { foo: propTypes.arrayOf(validator) },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -126,7 +126,7 @@ describe('arrayWithLength', () => {
             propTypes.checkPropTypes(
                 { foo: propType },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -158,14 +158,14 @@ describe('arrayWithLength', () => {
         it('returns an error when array items do not match propType', () => {
             props = { foo: [[0, 1, 'foo']] }
             expectedMessage =
-                'Warning: Failed foo[0] type: Invalid foo[0] `foo[0][2]` of type `string` supplied to `TestComponent`, expected `number`.'
+                'Warning: Failed foo[0] type: Invalid foo[0] `prop[0][2]` of type `string` supplied to `TestComponent`, expected `number`.'
         })
 
         it('returns an error when required but nothing provided', () => {
             propType = propTypes.arrayOf(validator).isRequired
             props = {}
             expectedMessage = toWarning(
-                'The foo `foo` is marked as required in `TestComponent`, but its value is `undefined`.'
+                'The prop `foo` is marked as required in `TestComponent`, but its value is `undefined`.'
             )
         })
     })

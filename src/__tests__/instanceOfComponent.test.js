@@ -3,7 +3,7 @@ import React from 'react'
 import propTypes from 'prop-types'
 import { instanceOfComponent } from '../instanceOfComponent'
 
-const toWarning = message => `Warning: Failed foo type: ${message}`
+const toWarning = message => `Warning: Failed prop type: ${message}`
 const Foo = () => <span />
 const Bar = () => <span />
 Bar.displayName = 'Bar'
@@ -20,7 +20,7 @@ describe('instanceOfComponent', () => {
             propTypes.checkPropTypes(
                 { foo: validator },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -37,7 +37,7 @@ describe('instanceOfComponent', () => {
             propTypes.checkPropTypes(
                 { foo: validator },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -52,7 +52,7 @@ describe('instanceOfComponent', () => {
             propTypes.checkPropTypes(
                 { foo: propTypes.arrayOf(validator) },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
@@ -69,7 +69,7 @@ describe('instanceOfComponent', () => {
             propTypes.checkPropTypes(
                 { foo: propTypes.arrayOf(validator) },
                 props,
-                'foo',
+                'prop',
                 'TestComponent'
             )
 
