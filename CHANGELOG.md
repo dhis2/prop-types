@@ -1,3 +1,16 @@
+# [1.5.0](https://github.com/dhis2/prop-types/compare/v1.4.0...v1.5.0) (2019-12-04)
+
+
+### Bug Fixes
+
+* **array with length:** check prop type correctly & fix error message ([c465743](https://github.com/dhis2/prop-types/commit/c465743b535223549151b35560f7975b222edaaf))
+* **required if:** remove duplicate prop name from error message ([f9f44b0](https://github.com/dhis2/prop-types/commit/f9f44b067d354a10fe28b89563cb0155cce649cc))
+
+
+### Features
+
+* **instance of component:** display name instead of the function body ([ede4312](https://github.com/dhis2/prop-types/commit/ede43124f83b10dd3d28e264ccbf7839a83fcad8))
+
 # [1.4.0](https://github.com/dhis2/prop-types/compare/v1.3.0...v1.4.0) (2019-11-21)
 
 
