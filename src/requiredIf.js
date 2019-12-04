@@ -5,13 +5,10 @@ const isEmpty = value =>
 
 const requiredIfFactory = (condition, propType, isRequired) => (
     props,
-    propSelector, // normally a propName, but when wrapped in arrayOf an index
-    componentName,
-    _location,
-    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
+    propName,
+    componentName
 ) => {
-    const propName = propFullName || propSelector
-    const propValue = props[propSelector]
+    const propValue = props[propName]
 
     // Usage errors
     if (isRequired) {
@@ -42,11 +39,9 @@ const requiredIfFactory = (condition, propType, isRequired) => (
     // This is how to programatically invoke a propTypes check
     // https://github.com/facebook/prop-types#proptypescheckproptypes
     propTypes.checkPropTypes(
-        {
-            [propName]: propType,
-        },
+        { [propName]: propType },
         props,
-        propName,
+        'prop',
         componentName
     )
 
