@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/dhis2/prop-types/compare/v1.5.0...v1.6.0) (2020-03-27)
+
+
+### Features
+
+* add conditional propType ([e859fff](https://github.com/dhis2/prop-types/commit/e859fff2a3f0ef2470c1f4d8e2b70da7e3caa760))
+
 # [1.5.0](https://github.com/dhis2/prop-types/compare/v1.4.0...v1.5.0) (2019-12-04)
 
 
