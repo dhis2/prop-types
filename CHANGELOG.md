@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/dhis2/prop-types/compare/v1.6.0...v1.6.1) (2020-03-31)
+
+
+### Bug Fixes
+
+* **conditional:** expose prop type publicly ([9439a60](https://github.com/dhis2/prop-types/commit/9439a60cfe2ab6493848e548d46045b0f6cca8c7))
+
 # [1.6.0](https://github.com/dhis2/prop-types/compare/v1.5.0...v1.6.0) (2020-03-27)
 
 
