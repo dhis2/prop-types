@@ -16,6 +16,9 @@ yarn add @dhis2/prop-types
 <dd><p>Ensure the prop value is an array with a length between a minimum and maximum.
 If a third <code>propType</code> argument is passed each item in the array needs to be of that prop-type</p>
 </dd>
+<dt><a href="#conditional">conditional(propsToPropType)</a> ⇒ <code>Error</code> | <code>null</code></dt>
+<dd><p>Conditionally determines a prop type bases on the passed props</p>
+</dd>
 <dt><a href="#instanceOfComponent">instanceOfComponent(Component)</a> ⇒ <code>Error</code> | <code>null</code></dt>
 <dd><p>Ensure the prop value is an instance of a certain component</p>
 </dd>
@@ -58,6 +61,48 @@ LotsOfLists.propTypes = {
     mandatoryArrayBetweenOneAndTen: arrayWithLength(1,10).isRequired,
 }
 ```
+
+<a name="conditional"></a>
+## conditional(propsToPropTypes) ⇒ <code>Error</code> \| <code>null</code>
+
+Determine the prop type of a prop by the value(s) of a/several passed prop(s).
+This will restrict the propType in contrast to `oneOfType`.
+
+**Kind**: global function  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| propsToPropType | <code>Function</code> |  | The function that will determine the actual prop type |
+
+**Example**  
+```js
+import React from 'react'
+import { conditional } from '@dhis2/prop-types'
+
+const Select = ({ multiple, selected: _selected, options }) => {
+    const selected = multiple ? _selected : [ _selected ]
+
+    return (
+        // ...
+    )
+}
+
+const option = propTypes.shape({
+    value: propTypes.string.isReuqired,
+    labe: propTypes.string.isReuqired,
+})
+
+LotsOfLists.propTypes = {
+    // ...
+    options: propTypes.arrayOf(option).isRequired,
+    selected: conditional(
+        props => props.multiple ? propTypes.arrayOf(option) : option
+    ).isRequired,
+    // ...
+}
+```
+
 <a name="instanceOfComponent"></a>
 
 ## instanceOfComponent(Component) ⇒ <code>Error</code> \| <code>null</code>
