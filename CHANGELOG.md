@@ -1,3 +1,10 @@
+## [1.6.2](https://github.com/dhis2/prop-types/compare/v1.6.1...v1.6.2) (2020-04-01)
+
+
+### Bug Fixes
+
+* **conditional:** correct typo in assignment in index.js ([d6c54f6](https://github.com/dhis2/prop-types/commit/d6c54f6eff9875f578d4d9f43608a09041d067d9))
+
 ## [1.6.1](https://github.com/dhis2/prop-types/compare/v1.6.0...v1.6.1) (2020-03-31)
 
 
