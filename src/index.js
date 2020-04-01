@@ -1,10 +1,10 @@
 import propTypes from 'prop-types'
 
-import { arrayWithLength } from './arrayWithLength.js'
-import { conditional } from './conditional';
-import { instanceOfComponent } from './instanceOfComponent.js'
-import { mutuallyExclusive } from './mutuallyExclusive.js'
-import { requiredIf } from './requiredIf.js'
+import { arrayWithLength } from './propTypes/arrayWithLength.js'
+import { conditional } from './propTypes/conditional'
+import { instanceOfComponent } from './propTypes/instanceOfComponent.js'
+import { mutuallyExclusive } from './propTypes/mutuallyExclusive.js'
+import { requiredIf } from './propTypes/requiredIf.js'
 
 propTypes.arrayWithLength = arrayWithLength
 propTypes.conditional = conditional
