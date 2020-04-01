@@ -7,7 +7,7 @@ import { mutuallyExclusive } from './mutuallyExclusive.js'
 import { requiredIf } from './requiredIf.js'
 
 propTypes.arrayWithLength = arrayWithLength
-propTypes.conditional = onditional
+propTypes.conditional = conditional
 propTypes.instanceOfComponent = instanceOfComponent
 propTypes.mutuallyExclusive = mutuallyExclusive
 propTypes.requiredIf = requiredIf
