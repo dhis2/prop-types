@@ -1,3 +1,10 @@
+## [1.6.4](https://github.com/dhis2/prop-types/compare/v1.6.3...v1.6.4) (2020-04-02)
+
+
+### Bug Fixes
+
+* export named exports as well ([4030de5](https://github.com/dhis2/prop-types/commit/4030de5d75845e354ba7d4f04288d6880c0551bd))
+
 ## [1.6.3](https://github.com/dhis2/prop-types/compare/v1.6.2...v1.6.3) (2020-04-02)
 
 
