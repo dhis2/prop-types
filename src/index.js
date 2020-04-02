@@ -1,17 +1,14 @@
 import propTypes from 'prop-types'
-import { arrayWithLength } from './propTypes/arrayWithLength.js'
-import { conditional } from './propTypes/conditional'
-import { instanceOfComponent } from './propTypes/instanceOfComponent.js'
-import { mutuallyExclusive } from './propTypes/mutuallyExclusive.js'
-import { requiredIf } from './propTypes/requiredIf.js'
+import * as customPropTypes from './propTypes'
 
-const dhis2PropTypes = {
+// Export all prop-types as named exports
+export * from './propTypes'
+export * from 'prop-types'
+
+// Export all prop-types as a default export as well
+const allPropTypes = {
     ...propTypes,
-    arrayWithLength,
-    conditional,
-    instanceOfComponent,
-    mutuallyExclusive,
-    requiredIf,
+    ...customPropTypes,
 }
 
-export default dhis2PropTypes
+export default allPropTypes
