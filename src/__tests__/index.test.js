@@ -1,6 +1,5 @@
 import fs from 'fs'
 import path from 'path'
-import originalPropTypes from 'prop-types'
 import dhis2PropTypes, * as namedDhis2PropTypes from '../index.js'
 
 const customPropTypesPath = path.join(__dirname, '../propTypes')
@@ -36,12 +35,6 @@ describe('default export', () => {
             expect(exportedPropType).toBe(dhis2PropTypes[filename])
         })
     })
-
-    it('should not overwrite existing prop-types in the prop-types package', () => {
-        Object.keys(originalPropTypes).forEach(propType => {
-            expect(dhis2PropTypes[propType]).toBe(originalPropTypes[propType])
-        })
-    })
 })
 
 describe('named exports', () => {
@@ -60,14 +53,6 @@ describe('named exports', () => {
             const exportedPropType = exportedModule[filename]
 
             expect(exportedPropType).toBe(namedDhis2PropTypes[filename])
-        })
-    })
-
-    it('should not overwrite existing prop-types in the prop-types package', () => {
-        Object.keys(originalPropTypes).forEach(propType => {
-            expect(namedDhis2PropTypes[propType]).toBe(
-                originalPropTypes[propType]
-            )
         })
     })
 })
