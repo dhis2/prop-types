@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/dhis2/prop-types/compare/v1.6.4...v2.0.0) (2020-04-28)
+
+
+### Features
+
+* update the export style ([decd522](https://github.com/dhis2/prop-types/commit/decd5227cdc3f7ccce1571ded890f636bd984332))
+
+
+### BREAKING CHANGES
+
+* this changes the re-export style for the prop-types lib. Instead of mixing our custom and the upstream prop-types, now the upstream lib is namespaced under the 'PropTypes' named export.
+
 ## [1.6.4](https://github.com/dhis2/prop-types/compare/v1.6.3...v1.6.4) (2020-04-02)
 
 
