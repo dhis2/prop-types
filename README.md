@@ -3,6 +3,7 @@
 This package contains common prop types used across dhis2 apps and libraries.
 
 ## Installation
+
 ```bash
 yarn add @dhis2/prop-types
 ```
@@ -35,19 +36,21 @@ also has a value, and ensure the prop is of the correct prop-type</p>
 <a name="arrayWithLength"></a>
 
 ## arrayWithLength([min], [max], [propType]) ⇒ <code>Error</code> \| <code>null</code>
+
 Ensure the prop value is an array with a length between a minimum and maximum.
 If a third `propType` argument is passed each item in the array needs to be of that prop-type
 
 **Kind**: global function  
-**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| [min] | <code>number</code> | <code>0</code> | The minimal array length |
-| [max] | <code>number</code> | <code>Infinity</code> | The maximal array length |
-| [propType] | <code>function</code> |  | The prop-type that each array item needs to conform to |
+| Param      | Type                  | Default               | Description                                            |
+| ---------- | --------------------- | --------------------- | ------------------------------------------------------ |
+| [min]      | <code>number</code>   | <code>0</code>        | The minimal array length                               |
+| [max]      | <code>number</code>   | <code>Infinity</code> | The maximal array length                               |
+| [propType] | <code>function</code> |                       | The prop-type that each array item needs to conform to |
 
-**Example**  
+**Example**
+
 ```js
 import React from 'react'
 import { arrayWithLength } from '@dhis2/prop-types'
@@ -58,24 +61,26 @@ LotsOfLists.propTypes = {
     arrayWithMaxThreeNumbers: arrayWithLength(0, 3, propTypes.number),
     arrayWithAtLeastSixStrings: arrayWithLength(6, undefined, propTypes.string),
     arrayWithAtLeastTenItems: arrayWithLength(10),
-    mandatoryArrayBetweenOneAndTen: arrayWithLength(1,10).isRequired,
+    mandatoryArrayBetweenOneAndTen: arrayWithLength(1, 10).isRequired,
 }
 ```
 
 <a name="conditional"></a>
+
 ## conditional(propsToPropTypes) ⇒ <code>Error</code> \| <code>null</code>
 
 Determine the prop type of a prop by the value(s) of a/several passed prop(s).
 This will restrict the propType in contrast to `oneOfType`.
 
 **Kind**: global function  
-**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| propsToPropType | <code>Function</code> |  | The function that will determine the actual prop type |
+| Param           | Type                  | Default | Description                                           |
+| --------------- | --------------------- | ------- | ----------------------------------------------------- |
+| propsToPropType | <code>Function</code> |         | The function that will determine the actual prop type |
 
-**Example**  
+**Example**
+
 ```js
 import React from 'react'
 import { conditional } from '@dhis2/prop-types'
@@ -106,16 +111,18 @@ LotsOfLists.propTypes = {
 <a name="instanceOfComponent"></a>
 
 ## instanceOfComponent(Component) ⇒ <code>Error</code> \| <code>null</code>
+
 Ensure the prop value is an instance of a certain component
 
 **Kind**: global function  
-**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error
 
-| Param | Type | Description |
-| --- | --- | --- |
+| Param     | Type                                         | Description                                                                                                                       |
+| --------- | -------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Component | <code>function</code> \| <code>string</code> | The component that is expected. Can either be a React component, or a string for built-in components, such as 'span', 'div', etc. |
 
-**Example**  
+**Example**
+
 ```js
 import React from 'react'
 import { instanceOfComponent } from '@dhis2/prop-types'
@@ -124,34 +131,37 @@ import { Button } from './Button'
 const ButtonWrap = ({ children }) => <div>{children}</div>
 // This would allow the ButtonWrap to be empty
 ButtonWrap.propTypes = {
-    children: instanceOfComponent(Button)
+    children: instanceOfComponent(Button),
 }
 
 // Enforce presence of a Button instance
 ButtonWrap.propTypes = {
-    children: instanceOfComponent(Button).isRequired
+    children: instanceOfComponent(Button).isRequired,
 }
 
 // Enforce presence of a multiple children, all Button instances
 ButtonWrap.propTypes = {
-    children: proptypes.arrayOf(instanceOfComponent(Button)).isRequired
+    children: proptypes.arrayOf(instanceOfComponent(Button)).isRequired,
 }
 ```
+
 <a name="mutuallyExclusive"></a>
 
 ## mutuallyExclusive(exlusivePropNames, propType) ⇒ <code>Error</code> \| <code>null</code>
+
 Ensure that only one property within a specified list is thruthy
 This function will also check if the current property value is of the specified type
 
 **Kind**: global function  
-**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error
 
-| Param | Type | Description |
-| --- | --- | --- |
-| exlusivePropNames | <code>array.&lt;string&gt;</code> | The prop names to be checked |
-| propType | <code>function</code> | The prop-type that the current prop-value needs to conform to |
+| Param             | Type                              | Description                                                   |
+| ----------------- | --------------------------------- | ------------------------------------------------------------- |
+| exlusivePropNames | <code>array.&lt;string&gt;</code> | The prop names to be checked                                  |
+| propType          | <code>function</code>             | The prop-type that the current prop-value needs to conform to |
 
-**Example**  
+**Example**
+
 ```js
 import React from 'react'
 import cx from 'classnames'
@@ -159,12 +169,13 @@ import propTypes from 'prop-types'
 import { mutuallyExclusive } from '@dhis2/prop-types'
 
 const Alert = ({ danger, warning, success, children }) => (
-    <div className={cx({danger, warning, success})}>
-        {children}
-    </div>
+    <div className={cx({ danger, warning, success })}>{children}</div>
 )
 
-const statusPropType = mutuallyExclusive(['danger', 'warning', 'success'], propTypes.bool)
+const statusPropType = mutuallyExclusive(
+    ['danger', 'warning', 'success'],
+    propTypes.bool
+)
 
 Alert.propTypes = {
     children: propTypes.node,
@@ -173,20 +184,23 @@ Alert.propTypes = {
     success: statusPropType,
 }
 ```
+
 <a name="requiredIf"></a>
 
 ## requiredIf(siblingPropName) ⇒ <code>Error</code> \| <code>null</code>
+
 Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
 also has a value, and ensure the prop is of the correct prop-type
 
 **Kind**: global function  
-**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error  
+**Returns**: <code>Error</code> \| <code>null</code> - Returns null if all conditions are met, or an error
 
-| Param | Type | Description |
-| --- | --- | --- |
+| Param           | Type                  | Description                  |
+| --------------- | --------------------- | ---------------------------- |
 | siblingPropName | <code>function</code> | The name of the sibling prop |
 
-**Example**  
+**Example**
+
 ```js
 import React from 'react'
 import { requiredIf } from '@dhis2/prop-types'
