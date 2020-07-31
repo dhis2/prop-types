@@ -30,7 +30,7 @@
     "@babel/preset-react": "^7.8.3",
     "@dhis2/cli-style": "6.0.0",
     "babel-eslint": "^10.0.3",
-    "jest": "^25.1.0",
+    "jest": "^26.2.2",
     "jsdoc-to-markdown": "^5.0.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
