@@ -15,7 +15,9 @@
         "test": "d2-app-scripts test",
         "docs": "jsdoc2md -t jsdoc2md/README.hbs src/*.js > README.md; echo",
         "build": "d2-app-scripts build",
-        "lint:style": "d2-style js check --all"
+        "lint": "yarn lint:js && yarn lint:text",
+        "lint:js": "d2-style js check",
+        "lint:text": "d2-style text check"
     },
     "dependencies": {
         "prop-types": "^15"
