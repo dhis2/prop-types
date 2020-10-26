@@ -1,3 +1,5 @@
+/* eslint-disable import/namespace */
+
 import fs from 'fs'
 import path from 'path'
 import dhis2PropTypes, * as namedDhis2PropTypes from '../index.js'

@@ -8,5 +8,5 @@ updates:
       target-branch: master
       versioning-strategy: increase
       labels:
-          - "dependencies"
-          - "automerge"
+          - 'dependencies'
+          - 'automerge'

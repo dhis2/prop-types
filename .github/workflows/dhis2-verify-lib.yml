@@ -127,4 +127,3 @@ jobs:
 
             - name: Publish to NPM
               run: npx @dhis2/cli-utils release --publish npm
-
