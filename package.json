@@ -26,7 +26,7 @@
         "@dhis2/cli-app-scripts": "^5.4.0",
         "@dhis2/cli-style": "7.2.0",
         "jsdoc-to-markdown": "^6.0.1",
-        "react": "^16.12.0",
+        "react": "^16.14.0",
         "react-dom": "^16.13.0"
     },
     "peerDependencies": {
