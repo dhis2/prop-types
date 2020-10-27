@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/dhis2/prop-types/compare/v2.0.0...v2.0.1) (2020-10-27)
+
+
+### Bug Fixes
+
+* build with platform d2-app-scripts ([#144](https://github.com/dhis2/prop-types/issues/144)) ([018c0ed](https://github.com/dhis2/prop-types/commit/018c0ed1d6d89b9bfb24a86f74e2f7f3d212f301))
+
 # [2.0.0](https://github.com/dhis2/prop-types/compare/v1.6.4...v2.0.0) (2020-04-28)
 
 
