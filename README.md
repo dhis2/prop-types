@@ -216,3 +216,14 @@ Test.propTypes = {
     someString: requiredIf(props => props.someBool, propTypes.string),
 }
 ```
+
+# Report an issue
+
+The issue tracker can be found in [DHIS2 JIRA](https://jira.dhis2.org)
+under the [LIBS](https://jira.dhis2.org/projects/LIBS) project.
+
+Deeplinks:
+
+-   [Bug](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10006&components=11008)
+-   [Improvement](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10002&components=11008)
+-   [Task](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10003&components=11008)
