@@ -24,7 +24,7 @@
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^5.4.1",
-        "@dhis2/cli-style": "7.2.0",
+        "@dhis2/cli-style": "7.2.1",
         "jsdoc-to-markdown": "^6.0.1",
         "react": "^16.14.0",
         "react-dom": "^16.13.0"
