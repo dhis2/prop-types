@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/dhis2/prop-types/compare/v2.0.1...v2.0.2) (2020-11-02)
+
+
+### Bug Fixes
+
+* cut release ([2b9cfb1](https://github.com/dhis2/prop-types/commit/2b9cfb15cf69d0a529a63293aead72716c60f9da))
+
 ## [2.0.1](https://github.com/dhis2/prop-types/compare/v2.0.0...v2.0.1) (2020-10-27)
 
 
