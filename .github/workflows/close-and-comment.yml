@@ -1,0 +1,12 @@
+on:
+    issues:
+        types: [opened]
+
+jobs:
+  comment-and-close:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: vardevs/candc
+        with:
+          exempt-users: dhis2-bot
+          github-token: ${{secrets.DHIS2_BOT_GITHUB_TOKEN}}
