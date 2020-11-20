@@ -6,8 +6,8 @@ jobs:
     comment-and-close:
         runs-on: ubuntu-latest
         steps:
-            - uses: vardevs/candc@main
+            - uses: vardevs/candc@v1
               with:
-                  close-comment: 'If you would like to report a [Bug](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10006&components=11008) or [Feature](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10300&components=11008) request, please do so at our issue tracker: https://jira.dhis2.org'
+                  close-comment: 'If you would like to report a bug or a feature request, please do so at our issue tracker:\n\nhttps://jira.dhis2.org\n\nMore information is available in the README.'
                   exempt-users: dhis2-bot
                   github-token: ${{secrets.DHIS2_BOT_GITHUB_TOKEN}}
