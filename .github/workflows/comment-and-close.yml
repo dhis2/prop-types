@@ -8,6 +8,6 @@ jobs:
         steps:
             - uses: vardevs/candc@v1
               with:
-                  close-comment: 'If you would like to report a [Bug](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10006&components=11008) or [Feature](https://jira.dhis2.org/secure/CreateIssueDetails!init.jspa?pid=10700&issuetype=10300&components=11008) request, please do so at our [issue tracker](https://jira.dhis2.org).'
-                  exempt-users: dhis2-bot
+                  close-comment: 'If you would like to file a bug report or feature request, please refer to our issue tracker: https://jira.dhis2.org'
+                  exempt-users: dhis2-bot,dependabot,kodiakhq
                   github-token: ${{secrets.DHIS2_BOT_GITHUB_TOKEN}}
