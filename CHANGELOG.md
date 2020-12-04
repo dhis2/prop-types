@@ -1,3 +1,10 @@
+## [2.0.3](https://github.com/dhis2/prop-types/compare/v2.0.2...v2.0.3) (2020-12-04)
+
+
+### Bug Fixes
+
+* remove unnecessary react peerDependency ([#213](https://github.com/dhis2/prop-types/issues/213)) ([9c761c7](https://github.com/dhis2/prop-types/commit/9c761c784729c6d1f7dcb0c77f03c7c5e665142d))
+
 ## [2.0.2](https://github.com/dhis2/prop-types/compare/v2.0.1...v2.0.2) (2020-11-02)
 
 
