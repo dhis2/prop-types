@@ -32,7 +32,7 @@ const requiredIfFactory = (condition, propType, isRequired) => (
     // Validation errors
     if (condition(props) && isEmpty(propValue)) {
         return new Error(
-            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is conditionally required but has value \`${propValue}\`.`
+            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is conditionally required but has value \`${propValue}\`. The condition that made this prop required is: \`${condition.toString()}\`.`
         )
     }
 
