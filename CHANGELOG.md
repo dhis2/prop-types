@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/dhis2/prop-types/compare/v2.0.3...v2.0.4) (2021-09-09)
+
+
+### Bug Fixes
+
+* **required-if:** mention condition in error message ([e9f40cd](https://github.com/dhis2/prop-types/commit/e9f40cd6665f198791bfdf31e50a631b0671f096))
+
 ## [2.0.3](https://github.com/dhis2/prop-types/compare/v2.0.2...v2.0.3) (2020-12-04)
 
 
