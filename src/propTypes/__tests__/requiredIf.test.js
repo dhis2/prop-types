@@ -62,7 +62,7 @@ describe('requiredIf', () => {
             props = { bar: 42 }
             componentName = 'TestComponent3'
             errorMessage = toWarning(
-                'Invalid prop `foo` supplied to `TestComponent3`, this prop is conditionally required but has value `undefined`.'
+                'Invalid prop `foo` supplied to `TestComponent3`, this prop is conditionally required but has value `undefined`. The condition that made this prop required is: `props => !!props.bar`.'
             )
         })
     })
