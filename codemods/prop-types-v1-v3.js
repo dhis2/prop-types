@@ -8,7 +8,7 @@ const DHIS2_PROP_TYPES_EXPORTS = new Set([
     'requiredIf',
 ])
 
-module.exports = function propTypesV1ToV3(fileInfo, api /*, options = {}*/) {
+module.exports = function propTypesV1ToV3(fileInfo, api) {
     const j = api.jscodeshift
     const root = j(fileInfo.source)
 
@@ -23,15 +23,7 @@ module.exports = function propTypesV1ToV3(fileInfo, api /*, options = {}*/) {
         dhis2PropTypeNames,
     } = getPropTypeNames(j, root)
 
-    // Transform import from prop-types
-    getPropTypesImportDeclarations(j, root).replaceWith(
-        getPropTypeImportString(propTypeNames)
-    )
-
-    // Transform import from @dhis2/prop-types
-    getDhis2PropTypesImportDeclarations(j, root).replaceWith(
-        getDhis2PropTypeImportString(dhis2PropTypeNames)
-    )
+    transformImports(j, root, propTypeNames, dhis2PropTypeNames)
 
     // Transform prop-types defined as expression statement, i.e. `SomeComponent.PropTypes = {}`
     getPropTypesExpressionStatements(j, root)
@@ -143,14 +135,45 @@ function getPropTypeNames(j, root) {
     return { defaultImportNames, propTypeNames, dhis2PropTypeNames }
 }
 
-function getPropTypeImportString(propTypeNames) {
-    return propTypeNames.length > 0 ? `import PropTypes from 'prop-types` : null
+function transformImports(j, root, propTypeNames, dhis2PropTypeNames) {
+    const propTypesImportStr =
+        propTypeNames.length > 0 ? `import PropTypes from 'prop-types` : null
+    const dhis2PropTypesNamedImportsStr = dhis2PropTypeNames.join(', ')
+    const dhis2PropTypesImportStr =
+        dhis2PropTypeNames.length > 0
+            ? `import { ${dhis2PropTypesNamedImportsStr} } from '@dhis2/prop-types`
+            : null
+    const propTypesImports = getPropTypesImportDeclarations(j, root)
+    const dhis2PropTypesImports = getDhis2PropTypesImportDeclarations(j, root)
+
+    if (propTypesImports.length > 0) {
+        propTypesImports.replaceWith(propTypesImportStr)
+    }
+    if (dhis2PropTypesImports.length > 0) {
+        dhis2PropTypesImports.replaceWith(dhis2PropTypesImportStr)
+    }
+
+    if (propTypesImports.length === 0 && propTypesImportStr) {
+        addImport(j, root, 'prop-types', propTypesImportStr)
+    }
+
+    if (dhis2PropTypesImports.length === 0 && dhis2PropTypesImportStr) {
+        addImport(j, root, '@dhis2/prop-types', dhis2PropTypesImportStr)
+    }
 }
 
-function getDhis2PropTypeImportString(dhis2PropTypeNames) {
-    return dhis2PropTypeNames.length > 0
-        ? `import { ${dhis2PropTypeNames.join(', ')} } from '@dhis2/prop-types`
-        : null
+function addImport(j, root, packageName, importString) {
+    const imports = root.find(j.ImportDeclaration)
+
+    if (imports.length === 0) {
+        root.get().node.program.body.unshift(importString)
+    } else {
+        const insertionIndex = imports
+            .nodes()
+            .findIndex(node => node.source.value > packageName)
+
+        j(imports.at(insertionIndex).get()).insertBefore(importString)
+    }
 }
 
 function transformPropTypesDeclaration(j, defaultImportNames, nodePath) {
