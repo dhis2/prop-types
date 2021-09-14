@@ -158,17 +158,25 @@ function getDhis2PropTypeImportString(dhis2PropTypeNames) {
 }
 
 function transformPropTypesDeclaration(j, defaultImportNames, nodePath) {
-    let { node } = nodePath
-    if (node.value.type === j.Identifier.name) {
-        node = transformIdentifierNode(j, node)
-    }
-    if (node.value.type === j.MemberExpression.name) {
-        node = transformMemberExpressionNode(j, defaultImportNames, node)
-    }
-    if (node.value.type === j.CallExpression.name) {
-        node = transformCallExpressionNode(j, node)
-    }
+    const { node } = nodePath
+    node.value = transformNodeValue(j, defaultImportNames, node.value)
     return node
+}
+
+function transformNodeValue(j, defaultImportNames, nodeValue) {
+    if (nodeValue.type === j.Identifier.name) {
+        return transformIdentifierNodeValue(j, nodeValue)
+    }
+    if (nodeValue.type === j.MemberExpression.name) {
+        return transformMemberExpressionNodeValue(
+            j,
+            defaultImportNames,
+            nodeValue
+        )
+    }
+    if (nodeValue.type === j.CallExpression.name) {
+        return transformCallExpressionNode(j, nodeValue)
+    }
 }
 
 /*
@@ -177,46 +185,48 @@ function transformPropTypesDeclaration(j, defaultImportNames, nodePath) {
  * `@dhis2/prop-types`, but not for prop-types imported from
  * `prop-types`, which should be used like this `PropTypes.bool`
  */
-function transformIdentifierNode(j, node) {
-    const name = node.value.name
+function transformIdentifierNodeValue(j, nodeValue) {
+    const name = nodeValue.name
     const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
 
-    if (!isDhis2PropType) {
-        // Transform `propTypeFn` to `PropTypes.propTypeFn`
-        node.value = j.memberExpression(
-            j.identifier('PropTypes'),
-            j.identifier(name),
-            false
-        )
+    if (isDhis2PropType) {
+        return nodeValue
     }
 
-    return node
+    // Transform `propTypeFn` to `PropTypes.propTypeFn`
+    return j.memberExpression(
+        j.identifier('PropTypes'),
+        j.identifier(name),
+        false
+    )
 }
 
 /*
  * MemberExpressionNodes are prop-type functions being used as
  * property on a default import, i.e. `PropTypes.bool`. This
- * type of useage is correct for prop-types from `prop-types`,
+ * type of usage is correct for prop-types from `prop-types`,
  * but not for DHIS2 prop-types, which should be imported as
  * named imports and then used directly, i.e. `requiredIf`
  */
-function transformMemberExpressionNode(j, defaultImportNames, node) {
-    const isRequiredProp = node.value.property.name === 'isRequired'
+function transformMemberExpressionNodeValue(j, defaultImportNames, nodeValue) {
+    const isRequiredProp = nodeValue.property.name === 'isRequired'
 
     if (isRequiredProp) {
-        // node = transformRequiredPropTypesDeclaration(j, defaultImportNames, node)
-        console.log('isRequired', node.value.object.type)
-        node.value.object = transformPropTypesDeclaration(
+        /*
+         * Recursively apply transformations for prop-type
+         * declarations ending in `.isRequired`
+         */
+        nodeValue.object = transformNodeValue(
             j,
             defaultImportNames,
-            node.value.object
+            nodeValue.object
         )
-        return node
+        return nodeValue
     }
 
-    const name = node.value.property.name
+    const name = nodeValue.property.name
     const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
-    const objectName = node.value.object.name
+    const objectName = nodeValue.object.name
     const isImportedDefault = defaultImportNames.some(
         name => name === objectName
     )
@@ -226,26 +236,25 @@ function transformMemberExpressionNode(j, defaultImportNames, node) {
          * Only transform member expressions based on the imported
          * defaults from `prop-types` or `@dhis2-prop-types`
          */
-        return node
+        return nodeValue
     }
 
     if (isDhis2PropType) {
         // remove PropTypes and call directly
-        node.value = j.identifier(name)
+        return j.identifier(name)
     } else {
         // Ensure object name is `PropTypes`
-        node.value.object.name = 'PropTypes'
+        nodeValue.object.name = 'PropTypes'
+        return nodeValue
     }
-
-    return node
 }
-function transformCallExpressionNode(j, node) {
+
+function transformCallExpressionNode(j, nodeValue) {
     // `PropTypes.shape()` VS `shape()`
-    const isMemberExpression =
-        node.value.callee.type === j.MemberExpression.name
+    const isMemberExpression = nodeValue.callee.type === j.MemberExpression.name
     const name = isMemberExpression
-        ? node.value.callee.property.name
-        : node.value.callee.name
+        ? nodeValue.callee.property.name
+        : nodeValue.callee.name
     const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
 
     if (isMemberExpression && isDhis2PropType) {
@@ -255,25 +264,28 @@ function transformCallExpressionNode(j, node) {
          * member expression node needs to be transformed to an
          * identifier node
          */
-        node.value = j.identifier(name)
+        nodeValue.callee = j.identifier(name)
+        return nodeValue
     } else if (isMemberExpression && !isDhis2PropType) {
         /*
          * prop-types from the `prop-types` package should be
          * used as member expression. So we only need to ensure
          * the correct object name `PropTypes` is being used
          */
-        node.value.callee.object.name = 'PropTypes'
+        nodeValue.callee.object.name = 'PropTypes'
+        return nodeValue
     } else if (!isMemberExpression && !isDhis2PropType) {
         /*
          * prop-types from the `prop-types` package should
          * used as member expression. So this identifier node
          * needs to be transformed to a member expression node
          */
-        node.value = j.memberExpression(
+        nodeValue.callee = j.memberExpression(
             j.identifier('PropTypes'),
             j.identifier(name),
             false
         )
+        return nodeValue
     }
     /*
      * No action taken for `!isMemberExpression && isDhis2PropType`:
@@ -282,5 +294,5 @@ function transformCallExpressionNode(j, node) {
      * already correct
      */
 
-    return node
+    return nodeValue
 }
