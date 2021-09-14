@@ -95,7 +95,6 @@ function getPropTypeNames(j, root) {
         ...getPropTypesImportDeclarations(j, root).nodes(),
         ...getDhis2PropTypesImportDeclarations(j, root).nodes(),
     ]
-
     const {
         defaultImportNames,
         namedImports,
@@ -112,10 +111,8 @@ function getPropTypeNames(j, root) {
         },
         { defaultImportNames: [], namedImports: [] }
     )
-
     const matcherFn = node =>
         defaultImportNames.some(name => name === node.object.name)
-
     const propTypesUsedFromDefaultImports = [
         ...getPropTypesExpressionStatements(j, root)
             .find(j.MemberExpression, matcherFn)
@@ -124,7 +121,6 @@ function getPropTypeNames(j, root) {
             .find(j.MemberExpression, matcherFn)
             .nodes(),
     ].map(node => node.property.name)
-
     // Use a Set to dedupe
     const allPropTypeNames = Array.from(
         new Set(namedImports.concat(propTypesUsedFromDefaultImports))
