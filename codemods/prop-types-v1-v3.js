@@ -1,6 +1,27 @@
 const PROP_TYPES_PACKAGE = 'prop-types'
+const PROP_TYPE_NAMES = new Set([
+    'array',
+    'bool',
+    'func',
+    'number',
+    'object',
+    'string',
+    'symbol',
+    'any',
+    'arrayOf',
+    'element',
+    'elementType',
+    'instanceOf',
+    'node',
+    'objectOf',
+    'oneOf',
+    'oneOfType',
+    'shape',
+    'exact',
+])
+
 const DHIS2_PROP_TYPES_PACKAGE = '@dhis2/prop-types'
-const DHIS2_PROP_TYPES_EXPORTS = new Set([
+const DHIS2_PROP_TYPE_NAMES = new Set([
     'arrayWithLength',
     'conditional',
     'instanceOfComponent',
@@ -12,8 +33,11 @@ module.exports = function propTypesV1ToV3(fileInfo, api) {
     const j = api.jscodeshift
     const root = j(fileInfo.source)
 
-    // No import from @dhis2/prop-types, nothing to transform
-    if (getDhis2PropTypesImportDeclarations(j, root).length === 0) {
+    // No prop-types imported, nothing to transform
+    if (
+        getPropTypesImportDeclarations(j, root).length === 0 &&
+        getDhis2PropTypesImportDeclarations(j, root).length === 0
+    ) {
         return root.toSource({ quote: 'single' })
     }
 
@@ -119,7 +143,7 @@ function getPropTypeNames(j, root) {
     )
     const { propTypeNames, dhis2PropTypeNames } = allPropTypeNames.reduce(
         (acc, name) => {
-            if (DHIS2_PROP_TYPES_EXPORTS.has(name)) {
+            if (DHIS2_PROP_TYPE_NAMES.has(name)) {
                 acc.dhis2PropTypeNames.push(name)
             } else {
                 acc.propTypeNames.push(name)
@@ -137,11 +161,11 @@ function getPropTypeNames(j, root) {
 
 function transformImports(j, root, propTypeNames, dhis2PropTypeNames) {
     const propTypesImportStr =
-        propTypeNames.length > 0 ? `import PropTypes from 'prop-types` : null
+        propTypeNames.length > 0 ? `import PropTypes from 'prop-types'` : null
     const dhis2PropTypesNamedImportsStr = dhis2PropTypeNames.join(', ')
     const dhis2PropTypesImportStr =
         dhis2PropTypeNames.length > 0
-            ? `import { ${dhis2PropTypesNamedImportsStr} } from '@dhis2/prop-types`
+            ? `import { ${dhis2PropTypesNamedImportsStr} } from '@dhis2/prop-types'`
             : null
     const propTypesImports = getPropTypesImportDeclarations(j, root)
     const dhis2PropTypesImports = getDhis2PropTypesImportDeclarations(j, root)
@@ -184,7 +208,7 @@ function transformPropTypesDeclaration(j, defaultImportNames, nodePath) {
 
 function transformNodeValue(j, defaultImportNames, nodeValue) {
     if (nodeValue.type === j.Identifier.name) {
-        return transformIdentifierNodeValue(j, nodeValue)
+        return transformIdentifierNodeValue(j, defaultImportNames, nodeValue)
     }
     if (nodeValue.type === j.MemberExpression.name) {
         return transformMemberExpressionNodeValue(
@@ -194,8 +218,10 @@ function transformNodeValue(j, defaultImportNames, nodeValue) {
         )
     }
     if (nodeValue.type === j.CallExpression.name) {
-        return transformCallExpressionNode(j, nodeValue)
+        return transformCallExpressionNode(j, defaultImportNames, nodeValue)
     }
+
+    return nodeValue
 }
 
 /*
@@ -204,11 +230,11 @@ function transformNodeValue(j, defaultImportNames, nodeValue) {
  * `@dhis2/prop-types`, but not for prop-types imported from
  * `prop-types`, which should be used like this `PropTypes.bool`
  */
-function transformIdentifierNodeValue(j, nodeValue) {
+function transformIdentifierNodeValue(j, defaultImportNames, nodeValue) {
     const name = nodeValue.name
-    const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
+    const isDhis2PropType = DHIS2_PROP_TYPE_NAMES.has(name)
 
-    if (isDhis2PropType) {
+    if (!isValidPropTypeName(name) || isDhis2PropType) {
         return nodeValue
     }
 
@@ -244,13 +270,13 @@ function transformMemberExpressionNodeValue(j, defaultImportNames, nodeValue) {
     }
 
     const name = nodeValue.property.name
-    const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
+    const isDhis2PropType = DHIS2_PROP_TYPE_NAMES.has(name)
     const objectName = nodeValue.object.name
     const isImportedDefault = defaultImportNames.some(
         name => name === objectName
     )
 
-    if (!isImportedDefault) {
+    if (!isValidPropTypeName(name) || !isImportedDefault) {
         /*
          * Only transform member expressions based on the imported
          * defaults from `prop-types` or `@dhis2-prop-types`
@@ -268,13 +294,22 @@ function transformMemberExpressionNodeValue(j, defaultImportNames, nodeValue) {
     }
 }
 
-function transformCallExpressionNode(j, nodeValue) {
+function transformCallExpressionNode(j, defaultImportNames, nodeValue) {
     // `PropTypes.shape()` VS `shape()`
     const isMemberExpression = nodeValue.callee.type === j.MemberExpression.name
     const name = isMemberExpression
         ? nodeValue.callee.property.name
         : nodeValue.callee.name
-    const isDhis2PropType = DHIS2_PROP_TYPES_EXPORTS.has(name)
+    const isDhis2PropType = DHIS2_PROP_TYPE_NAMES.has(name)
+
+    // Recursively transform function arguments
+    if (nodeValue.arguments && nodeValue.arguments.length > 0) {
+        transfromFunctionArguments(j, defaultImportNames, nodeValue.arguments)
+    }
+
+    if (!isValidPropTypeName(name)) {
+        return nodeValue
+    }
 
     if (isMemberExpression && isDhis2PropType) {
         /*
@@ -314,4 +349,31 @@ function transformCallExpressionNode(j, nodeValue) {
      */
 
     return nodeValue
+}
+
+function transfromFunctionArguments(j, defaultImportNames, functionArguments) {
+    functionArguments.forEach((argNode, argIndex) => {
+        // function arguments can be arrays themselves
+        if (argNode.type === j.ArrayExpression.name) {
+            if (argNode.elements && argNode.elements.length > 0) {
+                argNode.elements.forEach((argNodeEl, argElIndex) => {
+                    argNode.elements[argElIndex] = transformNodeValue(
+                        j,
+                        defaultImportNames,
+                        argNodeEl
+                    )
+                })
+            }
+        } else {
+            functionArguments[argIndex] = transformNodeValue(
+                j,
+                defaultImportNames,
+                argNode
+            )
+        }
+    })
+}
+
+function isValidPropTypeName(name) {
+    return PROP_TYPE_NAMES.has(name) || DHIS2_PROP_TYPE_NAMES.has(name)
 }
