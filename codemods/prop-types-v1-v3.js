@@ -63,6 +63,21 @@ module.exports = function propTypesV1ToV3(fileInfo, api) {
             transformPropTypesDeclaration.bind(null, j, defaultImportNames)
         )
 
+    // Transform prop-types used from the default import in the global scope
+    getMemberExpressionsInGlobalScope(
+        j,
+        root,
+        defaultImportNames
+    ).replaceWith(({ node }) => transformNodeValue(j, defaultImportNames, node))
+
+    // Transform prop-types used from the default import in the global scope
+    getIdentifiersInGlobalScope(
+        j,
+        root,
+        propTypeNames,
+        dhis2PropTypeNames
+    ).replaceWith(({ node }) => transformNodeValue(j, defaultImportNames, node))
+
     return root.toSource({ quote: 'single' })
 }
 
@@ -106,6 +121,44 @@ function getStaticClassPropertyDefinitions(j, root) {
     })
 }
 
+function getMemberExpressionsInGlobalScope(j, root, defaultImportNames) {
+    return root.find(j.MemberExpression).filter(nodePath => {
+        const { node, scope } = nodePath
+        const isPropTypeName = isValidPropTypeName(node.property.name)
+        const isDefaultImport = defaultImportNames.some(
+            name => name === node.object.name
+        )
+        return isPropTypeName && isDefaultImport && scope.isGlobal
+    })
+}
+
+function getIdentifiersInGlobalScope(
+    j,
+    root,
+    propTypeNames,
+    dhis2PropTypeNames
+) {
+    return root.find(j.Identifier).filter(nodePath => {
+        const { node, scope, parentPath } = nodePath
+        const isParentMemberExpression =
+            parentPath.value.type === j.MemberExpression.name
+        const isRequiredProp =
+            isParentMemberExpression &&
+            parentPath.value.property.name === 'isRequired'
+        const isPropTypeName = isValidPropTypeName(node.name)
+        const isNamedImport =
+            propTypeNames.some(name => name === node.name) ||
+            dhis2PropTypeNames.some(name => name === node.name)
+
+        return (
+            (!isParentMemberExpression || isRequiredProp) &&
+            isPropTypeName &&
+            isNamedImport &&
+            scope.isGlobal
+        )
+    })
+}
+
 function getPropTypeNames(j, root) {
     const allImportDeclarationNodes = [
         ...getPropTypesImportDeclarations(j, root).nodes(),
@@ -136,7 +189,13 @@ function getPropTypeNames(j, root) {
         ...getStaticClassPropertyDefinitions(j, root)
             .find(j.MemberExpression, matcherFn)
             .nodes(),
+        ...getMemberExpressionsInGlobalScope(
+            j,
+            root,
+            defaultImportNames
+        ).nodes(),
     ].map(node => node.property.name)
+
     // Use a Set to dedupe
     const allPropTypeNames = Array.from(
         new Set(namedImports.concat(propTypesUsedFromDefaultImports))
@@ -162,7 +221,7 @@ function getPropTypeNames(j, root) {
 function transformImports(j, root, propTypeNames, dhis2PropTypeNames) {
     const propTypesImportStr =
         propTypeNames.length > 0 ? `import PropTypes from 'prop-types'` : null
-    const dhis2PropTypesNamedImportsStr = dhis2PropTypeNames.join(', ')
+    const dhis2PropTypesNamedImportsStr = dhis2PropTypeNames.sort().join(', ')
     const dhis2PropTypesImportStr =
         dhis2PropTypeNames.length > 0
             ? `import { ${dhis2PropTypesNamedImportsStr} } from '@dhis2/prop-types'`
