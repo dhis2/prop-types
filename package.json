@@ -1,8 +1,8 @@
 {
     "name": "@dhis2/prop-types",
     "version": "2.0.4",
-    "main": "./build/cjs/lib.js",
-    "module": "./build/es/lib.js",
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
     "sideEffects": false,
     "repository": "https://github.com/dhis2/prop-types.git",
     "author": "Jan-Gerke Salomon <jgs.salomon@gmail.com>",
@@ -33,5 +33,9 @@
     },
     "files": [
         "build"
-    ]
+    ],
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
+    }
 }
