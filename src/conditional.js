@@ -66,7 +66,7 @@ export const conditionalFactory = (propsToPropType, isRequired) => (
  * List.propTypes = {
  *     multiple: propTypes.bool,
  *     items: props.arrayOf(prpoTypes.string),
- *     selected: propsToPropTypeal(
+ *     selected: conditional(
  *         props => propTypes.multiple
  *           ? propTypes.arrayOf(prpoTypes.string)
  *           : propTypes.string,
