@@ -217,6 +217,49 @@ Test.propTypes = {
 }
 ```
 
+## Migrating to `@dhis2/prop-types` V3
+
+### Change summary
+
+`@dhis2/prop-types` previously had a direct dependency on the `prop-types` library and also re-exported its exports:
+
+-   In v1 we used to export a default object that included all of the regular prop-types and the DHIS2 custom prop-types. We also exposed all the regular and custom prop-types as named exports.
+-   In v2 we took a slightly different approach:
+    -   DHIS2 custom prop-types were available as named exports
+    -   The default export was an object containing all the custom prop-types
+    -   Regular prop-types were exported via the `PropTypes` export
+-   And now in v3 we do not re-export anything from the `prop-types` package anymore. Instead we simply expose our own custom prop-types functions as named exports.
+
+### Migrating from v1 to v3
+
+These are the steps to take:
+
+1. Install version v3.0.0, for example by running `yarn upgrade @dhis2/prop-types --latest`. Ensure the `package.json` has an entry for `"@dhis2/prop-types": "^3.x.x"`
+1. Prepare the files for the new version by running the codemod provided with this release:
+    - Ensure a recent version of `@dhis2/cli` is installed.
+    - Ensure the codemod is available by running:
+        ```
+        d2 utils codemod list
+        ```
+        You should see `@dhis2/prop-types:prop-types-v1-v3.js` listed.
+    - Apply the codemod by running:
+        ```
+        d2 utils codemod apply @dhis2/prop-types:prop-types-v1-v3.js **/*.js`
+        ```
+1. Ensure the `prop-types` package is listed as a regular dependency in `package.json`.
+1. Scan the project for imports from `@dhis2/prop-types` (doing a global search for `from '@dhis2/prop-types'` will do the trick).
+    - If any of these imports are encountered, the project still needs this dependency.
+    - Quite likely, the search will yield no results, which means the `@dhis2/prop-types` dependency should be removed.
+
+### Migrating from v2 to v3
+
+No codemod is available to transform the component files, but this should be fairly straightforward:
+
+1. Replace `import { PropTypes } from '@dhis2/prop-types'` with `import PropTypes from 'prop-types'`.
+1. The previous step should update most of the component files in the project correctly. If there are still component files left that import from `@dhis2/prop-types`, then probably these are actually using DHIS2 custom prop-types and these files should be addressed individually.
+
+Once the component files have been updated, the dependencies in `package.json` need to be updated in eaxtly the same way as illustrated in step 3 and 4 of the v1 -> 3 migration section.
+
 ## Report an issue
 
 The issue tracker can be found in [DHIS2 JIRA](https://jira.dhis2.org)
