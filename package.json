@@ -32,7 +32,8 @@
         "react-dom": "^16.14.0"
     },
     "files": [
-        "build"
+        "build",
+        "codemods"
     ],
     "exports": {
         "import": "./build/es/index.js",
