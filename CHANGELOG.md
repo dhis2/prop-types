@@ -1,3 +1,10 @@
+# [3.0.0-beta.2](https://github.com/dhis2/prop-types/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2021-09-29)
+
+
+### Bug Fixes
+
+* publish codemod and add migration docs ([#260](https://github.com/dhis2/prop-types/issues/260)) ([7a0fc61](https://github.com/dhis2/prop-types/commit/7a0fc61b4970aef01537b93861b0c0bc969bdfca))
+
 # [3.0.0-beta.1](https://github.com/dhis2/prop-types/compare/v2.0.4...v3.0.0-beta.1) (2021-09-19)
 
 
