@@ -1,3 +1,23 @@
+# [3.0.0-beta.2](https://github.com/dhis2/prop-types/compare/v3.0.0-beta.1...v3.0.0-beta.2) (2021-09-29)
+
+
+### Bug Fixes
+
+* publish codemod and add migration docs ([#260](https://github.com/dhis2/prop-types/issues/260)) ([7a0fc61](https://github.com/dhis2/prop-types/commit/7a0fc61b4970aef01537b93861b0c0bc969bdfca))
+
+# [3.0.0-beta.1](https://github.com/dhis2/prop-types/compare/v2.0.4...v3.0.0-beta.1) (2021-09-19)
+
+
+### Code Refactoring
+
+* only export custom prop-type functions ([#254](https://github.com/dhis2/prop-types/issues/254)) ([c2262e0](https://github.com/dhis2/prop-types/commit/c2262e0503e78f4b2e1bb65ba5114821c606bd2d))
+
+
+### BREAKING CHANGES
+
+* prop-types from the `props-types` package are no longer re-exported from `@dhis2/prop-types`
+* `@dhis2/prop-types` no longer exports a default, the DHIS2 custom prop-types are only available as named imports
+
 ## [2.0.4](https://github.com/dhis2/prop-types/compare/v2.0.3...v2.0.4) (2021-09-09)
 
 

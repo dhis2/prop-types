@@ -1,8 +1,8 @@
 {
     "name": "@dhis2/prop-types",
-    "version": "2.0.4",
-    "main": "./build/cjs/lib.js",
-    "module": "./build/es/lib.js",
+    "version": "3.0.0-beta.2",
+    "main": "./build/cjs/index.js",
+    "module": "./build/es/index.js",
     "sideEffects": false,
     "repository": "https://github.com/dhis2/prop-types.git",
     "author": "Jan-Gerke Salomon <jgs.salomon@gmail.com>",
@@ -19,17 +19,24 @@
         "lint:js": "d2-style js check",
         "lint:text": "d2-style text check"
     },
-    "dependencies": {
+    "peerDependencies": {
         "prop-types": "^15"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "^5.4.1",
+        "@dhis2/cli-app-scripts": "^7.6.6",
         "@dhis2/cli-style": "7.2.1",
+        "jscodeshift": "^0.13.0",
         "jsdoc-to-markdown": "^6.0.1",
+        "prop-types": "^15",
         "react": "^16.14.0",
         "react-dom": "^16.14.0"
     },
     "files": [
-        "build"
-    ]
+        "build",
+        "codemods"
+    ],
+    "exports": {
+        "import": "./build/es/index.js",
+        "require": "./build/cjs/index.js"
+    }
 }
