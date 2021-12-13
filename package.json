@@ -24,7 +24,7 @@
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^7.6.6",
-        "@dhis2/cli-style": "7.2.1",
+        "@dhis2/cli-style": "10.1.2",
         "jscodeshift": "^0.13.0",
         "jsdoc-to-markdown": "^6.0.1",
         "prop-types": "^15",
