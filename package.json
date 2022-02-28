@@ -23,7 +23,7 @@
         "prop-types": "^15"
     },
     "devDependencies": {
-        "@dhis2/cli-app-scripts": "^7.6.6",
+        "@dhis2/cli-app-scripts": "^8.3.3",
         "@dhis2/cli-style": "7.2.1",
         "jscodeshift": "^0.13.0",
         "jsdoc-to-markdown": "^6.0.1",
