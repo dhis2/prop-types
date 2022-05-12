@@ -1,7 +1,7 @@
 import propTypes from 'prop-types'
 import { mutuallyExclusive } from '../mutuallyExclusive'
 
-const toWarning = message => `Warning: Failed prop type: ${message}`
+const toWarning = (message) => `Warning: Failed prop type: ${message}`
 
 describe('mutuallyExclusive', () => {
     jest.spyOn(console, 'error').mockImplementation(() => null)

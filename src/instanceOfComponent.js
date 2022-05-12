@@ -1,56 +1,58 @@
-const instanceOfComponentFactory = (Component, isRequired) => (
-    props,
-    propSelector, // normally a propName, but when wrapped in arrayOf an index
-    componentName,
-    _location,
-    propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
-) => {
-    const child = props[propSelector]
-    const propName = propFullName || propSelector
-    const hasRenderableChild = child === 0 || !!child
-    const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+const instanceOfComponentFactory =
+    (Component, isRequired) =>
+    (
+        props,
+        propSelector, // normally a propName, but when wrapped in arrayOf an index
+        componentName,
+        _location,
+        propFullName // normally null but a string like "propName[index]" when wrapped in arrayOf
+    ) => {
+        const child = props[propSelector]
+        const propName = propFullName || propSelector
+        const hasRenderableChild = child === 0 || !!child
+        const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
 
-    if (Array.isArray(child)) {
-        return new Error(
-            `${baseMsg} expected a single component instance but received an array.`
-        )
-    }
-
-    if (!hasRenderableChild) {
-        if (isRequired) {
+        if (Array.isArray(child)) {
             return new Error(
-                `${baseMsg} this is a required property but its value is \`${child}\`.`
+                `${baseMsg} expected a single component instance but received an array.`
             )
-        } else {
-            return null
         }
+
+        if (!hasRenderableChild) {
+            if (isRequired) {
+                return new Error(
+                    `${baseMsg} this is a required property but its value is \`${child}\`.`
+                )
+            } else {
+                return null
+            }
+        }
+
+        const expectedComponentName =
+            typeof Component === 'string'
+                ? Component
+                : Component.name || Component.displayName
+        const foundComponentName =
+            typeof child.type !== 'string'
+                ? child.type && child.type.name
+                    ? child.type.name
+                    : child.type
+                : child.type && (child.type.name || child.type.displayName)
+
+        if (!foundComponentName) {
+            return new Error(
+                `${baseMsg} could not read component name. Property value does not look like a component instance.`
+            )
+        }
+
+        if (child.type !== Component) {
+            return new Error(
+                `${baseMsg} expected an instance of \`${expectedComponentName}\` but found an instance of \`${foundComponentName}\`.`
+            )
+        }
+
+        return null
     }
-
-    const expectedComponentName =
-        typeof Component === 'string'
-            ? Component
-            : Component.name || Component.displayName
-    const foundComponentName =
-        typeof child.type !== 'string'
-            ? child.type && child.type.name
-                ? child.type.name
-                : child.type
-            : child.type && (child.type.name || child.type.displayName)
-
-    if (!foundComponentName) {
-        return new Error(
-            `${baseMsg} could not read component name. Property value does not look like a component instance.`
-        )
-    }
-
-    if (child.type !== Component) {
-        return new Error(
-            `${baseMsg} expected an instance of \`${expectedComponentName}\` but found an instance of \`${foundComponentName}\`.`
-        )
-    }
-
-    return null
-}
 
 /**
  * Ensure the prop value is an instance of a certain component

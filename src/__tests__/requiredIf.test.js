@@ -1,10 +1,12 @@
 import propTypes from 'prop-types'
 import { requiredIf } from '../requiredIf'
 
-const toWarning = message => `Warning: Failed prop type: ${message}`
+const toWarning = (message) => `Warning: Failed prop type: ${message}`
 
 describe('requiredIf', () => {
-    const propType = { foo: requiredIf(props => !!props.bar, propTypes.string) }
+    const propType = {
+        foo: requiredIf((props) => !!props.bar, propTypes.string),
+    }
 
     jest.spyOn(console, 'error').mockImplementation(() => null)
     afterEach(() => console.error.mockClear())

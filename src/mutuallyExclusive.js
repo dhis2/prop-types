@@ -1,50 +1,48 @@
 import propTypes from 'prop-types'
 
-const mutuallyExclusiveFactory = (exlusivePropNames, propType, isRequired) => (
-    props,
-    propName,
-    componentName
-) => {
-    const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
-    const isDefined = typeof props[propName] !== 'undefined'
+const mutuallyExclusiveFactory =
+    (exlusivePropNames, propType, isRequired) =>
+    (props, propName, componentName) => {
+        const baseMsg = `Invalid prop \`${propName}\` supplied to \`${componentName}\`,`
+        const isDefined = typeof props[propName] !== 'undefined'
 
-    // Usage errors
-    if (exlusivePropNames.length === 0) {
-        return new Error(
-            `mutuallyExclusive was called without any arguments for property \`${propName}\` on component \`${componentName}\`. Please add the required arguments.`
-        )
-    }
-
-    // Validation errors
-    if (isRequired && !isDefined) {
-        return new Error(
-            `${baseMsg} this prop is required but no value was found.`
-        )
-    }
-
-    // This is how to programatically invoke a propTypes check
-    // https://github.com/facebook/prop-types#proptypescheckproptypes
-    propTypes.checkPropTypes(
-        { [propName]: propType },
-        props,
-        'prop',
-        componentName
-    )
-
-    if (props[propName]) {
-        const thruthySiblingPropName = exlusivePropNames.find(
-            name => props[name] && name !== propName
-        )
-
-        if (thruthySiblingPropName) {
+        // Usage errors
+        if (exlusivePropNames.length === 0) {
             return new Error(
-                `${baseMsg} Property '${propName}' is mutually exclusive with '${thruthySiblingPropName}', but both have a thruthy value.`
+                `mutuallyExclusive was called without any arguments for property \`${propName}\` on component \`${componentName}\`. Please add the required arguments.`
             )
         }
-    }
 
-    return null
-}
+        // Validation errors
+        if (isRequired && !isDefined) {
+            return new Error(
+                `${baseMsg} this prop is required but no value was found.`
+            )
+        }
+
+        // This is how to programatically invoke a propTypes check
+        // https://github.com/facebook/prop-types#proptypescheckproptypes
+        propTypes.checkPropTypes(
+            { [propName]: propType },
+            props,
+            'prop',
+            componentName
+        )
+
+        if (props[propName]) {
+            const thruthySiblingPropName = exlusivePropNames.find(
+                (name) => props[name] && name !== propName
+            )
+
+            if (thruthySiblingPropName) {
+                return new Error(
+                    `${baseMsg} Property '${propName}' is mutually exclusive with '${thruthySiblingPropName}', but both have a thruthy value.`
+                )
+            }
+        }
+
+        return null
+    }
 
 /**
  * Ensure that only one property within a specified list is thruthy

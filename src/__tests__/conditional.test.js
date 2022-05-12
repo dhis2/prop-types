@@ -4,7 +4,7 @@ import { conditional } from '../conditional'
 describe('conditional', () => {
     const propType = {
         multiple: propTypes.bool,
-        selected: conditional(props =>
+        selected: conditional((props) =>
             props.multiple
                 ? propTypes.arrayOf(propTypes.string)
                 : propTypes.string

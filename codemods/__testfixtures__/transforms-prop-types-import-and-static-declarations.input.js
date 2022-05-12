@@ -1,5 +1,5 @@
-import React from 'react'
 import { any, array, arrayOf, bool, element, elementType, exact, func, instanceOf, node, number, object, objectOf, oneOf, oneOfType, shape, string, symbol } from 'prop-types'
+import React from 'react'
 
 const specialProp = shape({
     flag: bool,

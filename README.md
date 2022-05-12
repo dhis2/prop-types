@@ -55,7 +55,7 @@ If a third `propType` argument is passed each item in the array needs to be of t
 import React from 'react'
 import { arrayWithLength } from '@dhis2/prop-types'
 
-const LotsOfLists = props => <div {...props}>Does nothing</div>
+const LotsOfLists = (props) => <div {...props}>Does nothing</div>
 
 LotsOfLists.propTypes = {
     arrayWithMaxThreeNumbers: arrayWithLength(0, 3, propTypes.number),
@@ -213,7 +213,7 @@ const Test = ({ someBool, someString }) => (
 )
 Test.propTypes = {
     someBool: propTypes.bool,
-    someString: requiredIf(props => props.someBool, propTypes.string),
+    someString: requiredIf((props) => props.someBool, propTypes.string),
 }
 ```
 
