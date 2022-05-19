@@ -17,7 +17,7 @@
         "build": "d2-app-scripts build",
         "lint": "yarn lint:js && yarn lint:text",
         "lint:js": "d2-style check js",
-        "lint:text": "d2-style text check"
+        "lint:text": "d2-style check text"
     },
     "peerDependencies": {
         "prop-types": "^15"
