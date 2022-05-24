@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { arrayWithLength } from '../arrayWithLength'
+import { arrayWithLength } from '../arrayWithLength.js'
 
 const toWarning = (message) => `Warning: Failed prop type: ${message}`
 

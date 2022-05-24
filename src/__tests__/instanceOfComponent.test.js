@@ -1,7 +1,7 @@
-// eslint-disable-next-line no-unused-vars
 import propTypes from 'prop-types'
+// eslint-disable-next-line no-unused-vars
 import React from 'react'
-import { instanceOfComponent } from '../instanceOfComponent'
+import { instanceOfComponent } from '../instanceOfComponent.js'
 
 const toWarning = (message) => `Warning: Failed prop type: ${message}`
 const Foo = () => <span />

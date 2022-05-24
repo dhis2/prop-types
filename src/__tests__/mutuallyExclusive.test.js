@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { mutuallyExclusive } from '../mutuallyExclusive'
+import { mutuallyExclusive } from '../mutuallyExclusive.js'
 
 const toWarning = (message) => `Warning: Failed prop type: ${message}`
 

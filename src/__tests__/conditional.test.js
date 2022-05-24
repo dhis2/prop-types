@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { conditional } from '../conditional'
+import { conditional } from '../conditional.js'
 
 describe('conditional', () => {
     const propType = {

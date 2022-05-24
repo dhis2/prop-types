@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { requiredIf } from '../requiredIf'
+import { requiredIf } from '../requiredIf.js'
 
 const toWarning = (message) => `Warning: Failed prop type: ${message}`
 
