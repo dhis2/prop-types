@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/dhis2/prop-types/compare/v3.0.0...v3.1.0) (2022-05-24)
+
+
+### Features
+
+* add deprecated prop decorator ([#286](https://github.com/dhis2/prop-types/issues/286)) ([cdeea37](https://github.com/dhis2/prop-types/commit/cdeea3787de1e9d145a71ed9a1875a58c09cee9c))
+
 # [3.0.0](https://github.com/dhis2/prop-types/compare/v2.0.4...v3.0.0) (2021-09-30)
 
 
