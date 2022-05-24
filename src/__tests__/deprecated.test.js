@@ -115,4 +115,25 @@ describe('deprecated', () => {
         expect(spy).toBeCalledTimes(4)
         expect(console.warn).toBeCalledTimes(1)
     })
+    it('does not produce a warning when the deprecated prop is not passed', () => {
+        const propType = {
+            deprecatedBool: deprecated(
+                propTypes.bool,
+                'Please do not use anymore'
+            ),
+        }
+        const props = {
+            deprecatedBool: undefined,
+        }
+
+        propTypes.checkPropTypes(
+            propType,
+            props,
+            'deprecatedMandatoryBool',
+            'TestComponent'
+        )
+
+        expect(console.error).toBeCalledTimes(0)
+        expect(console.warn).toBeCalledTimes(0)
+    })
 })

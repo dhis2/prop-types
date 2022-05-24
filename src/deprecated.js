@@ -6,7 +6,10 @@ export const deprecated = (propType, explanation) => {
     return (props, propName, componentName) => {
         const message = `"${propName}" property of "${componentName}" has been deprecated. ${explanation}`
 
-        if (!emmittedWarnings.has(message)) {
+        if (
+            typeof props[propName] !== 'undefined' &&
+            !emmittedWarnings.has(message)
+        ) {
             console.warn(message)
             emmittedWarnings.add(message)
         }
