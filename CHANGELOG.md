@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/dhis2/prop-types/compare/v3.1.0...v3.1.1) (2022-05-24)
+
+
+### Bug Fixes
+
+* expose new deprecated function ([#288](https://github.com/dhis2/prop-types/issues/288)) ([7240f14](https://github.com/dhis2/prop-types/commit/7240f147797f6dae93a68a86416c48c30986dc27))
+
 # [3.1.0](https://github.com/dhis2/prop-types/compare/v3.0.0...v3.1.0) (2022-05-24)
 
 
