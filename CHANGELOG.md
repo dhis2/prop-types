@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/dhis2/prop-types/compare/v3.1.1...v3.1.2) (2022-05-24)
+
+
+### Bug Fixes
+
+* **deprecated:** show warning only if prop is populated ([#289](https://github.com/dhis2/prop-types/issues/289)) ([1417bda](https://github.com/dhis2/prop-types/commit/1417bdafb43e586e4c7422c1f3ca26fc9928e88f))
+
 ## [3.1.1](https://github.com/dhis2/prop-types/compare/v3.1.0...v3.1.1) (2022-05-24)
 
 
