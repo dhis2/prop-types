@@ -99,7 +99,7 @@ class PropTypesV1ToV2Codemod {
             ...this.dhis2PropTypesImportDeclarations.nodes(),
         ].reduce(
             (acc, node) => {
-                node.specifiers.forEach(specifierNode => {
+                node.specifiers.forEach((specifierNode) => {
                     if (
                         specifierNode.type ===
                         this.j.ImportDefaultSpecifier.name
@@ -116,9 +116,9 @@ class PropTypesV1ToV2Codemod {
     }
 
     setPropTypeNames() {
-        const matcherFn = node =>
+        const matcherFn = (node) =>
             this.importedMemberNames.defaults.some(
-                name => name === node.object.name
+                (name) => name === node.object.name
             )
         const propTypesUsedFromDefaultImports = [
             ...this.getPropTypesExpressionStatements()
@@ -128,7 +128,7 @@ class PropTypesV1ToV2Codemod {
                 .find(this.j.MemberExpression, matcherFn)
                 .nodes(),
             ...this.getMemberExpressionsInGlobalScope().nodes(),
-        ].map(node => node.property.name)
+        ].map((node) => node.property.name)
 
         // Use a Set to dedupe
         const allPropTypeNames = Array.from(
@@ -199,7 +199,7 @@ class PropTypesV1ToV2Codemod {
         } else {
             const insertionIndex = imports
                 .nodes()
-                .findIndex(node => node.source.value > packageName)
+                .findIndex((node) => node.source.value > packageName)
 
             this.j(imports.at(insertionIndex).get()).insertBefore(importString)
         }
@@ -229,7 +229,7 @@ class PropTypesV1ToV2Codemod {
     }
 
     getMemberExpressionsInGlobalScope() {
-        return this.root.find(this.j.MemberExpression).filter(nodePath => {
+        return this.root.find(this.j.MemberExpression).filter((nodePath) => {
             const { node, scope } = nodePath
 
             return (
@@ -241,7 +241,7 @@ class PropTypesV1ToV2Codemod {
     }
 
     getIdentifiersInGlobalScope() {
-        return this.root.find(this.j.Identifier).filter(nodePath => {
+        return this.root.find(this.j.Identifier).filter((nodePath) => {
             const { node, scope, parentPath } = nodePath
             const isParentMemberExpression =
                 parentPath.value.type === this.j.MemberExpression.name
@@ -434,9 +434,8 @@ class PropTypesV1ToV2Codemod {
             if (argNode.type === this.j.ArrayExpression.name) {
                 if (argNode.elements && argNode.elements.length > 0) {
                     argNode.elements.forEach((argNodeEl, argElIndex) => {
-                        argNode.elements[argElIndex] = this.transformNode(
-                            argNodeEl
-                        )
+                        argNode.elements[argElIndex] =
+                            this.transformNode(argNodeEl)
                     })
                 }
             } else {
@@ -446,11 +445,11 @@ class PropTypesV1ToV2Codemod {
     }
 
     isImportedDefault(name) {
-        return this.importedMemberNames.defaults.some(n => n === name)
+        return this.importedMemberNames.defaults.some((n) => n === name)
     }
 
     isNamedImport(name) {
-        return this.importedMemberNames.named.some(n => n === name)
+        return this.importedMemberNames.named.some((n) => n === name)
     }
 
     isValidDhis2PropTypeName(name) {

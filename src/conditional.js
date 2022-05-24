@@ -1,42 +1,39 @@
 import propTypes from 'prop-types'
 
-export const conditionalFactory = (propsToPropType, isRequired) => (
-    props,
-    propName,
-    componentName
-) => {
-    const isDefined = typeof props[propName] !== 'undefined'
+export const conditionalFactory =
+    (propsToPropType, isRequired) => (props, propName, componentName) => {
+        const isDefined = typeof props[propName] !== 'undefined'
 
-    if (typeof propsToPropType !== 'function') {
-        return new Error(
-            `The \`propsToPropType\` argument passed to the \`propsToPropTypeal\` prop-validator was not a function.`
+        if (typeof propsToPropType !== 'function') {
+            return new Error(
+                `The \`propsToPropType\` argument passed to the \`propsToPropTypeal\` prop-validator was not a function.`
+            )
+        }
+
+        const propType = propsToPropType(props)
+
+        if (typeof propType !== 'function') {
+            return new Error(
+                `The response of \`propsToPropType\` call with the props was not a function.`
+            )
+        }
+
+        // Validation errors
+        if (isRequired && !isDefined) {
+            return new Error(
+                `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is required but no value was found.`
+            )
+        }
+
+        propTypes.checkPropTypes(
+            { [propName]: propType },
+            props,
+            'prop',
+            componentName
         )
+
+        return null
     }
-
-    const propType = propsToPropType(props)
-
-    if (typeof propType !== 'function') {
-        return new Error(
-            `The response of \`propsToPropType\` call with the props was not a function.`
-        )
-    }
-
-    // Validation errors
-    if (isRequired && !isDefined) {
-        return new Error(
-            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is required but no value was found.`
-        )
-    }
-
-    propTypes.checkPropTypes(
-        { [propName]: propType },
-        props,
-        'prop',
-        componentName
-    )
-
-    return null
-}
 
 /**
  * Uses either one or another propType, based on the result of the
@@ -73,7 +70,7 @@ export const conditionalFactory = (propsToPropType, isRequired) => (
  *     ),
  * }
  */
-export const conditional = propsToPropType => {
+export const conditional = (propsToPropType) => {
     const fn = conditionalFactory(propsToPropType, false)
     fn.isRequired = conditionalFactory(propsToPropType, true)
     return fn

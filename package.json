@@ -16,15 +16,15 @@
         "docs": "jsdoc2md -t jsdoc2md/README.hbs src/*.js > README.md; echo",
         "build": "d2-app-scripts build",
         "lint": "yarn lint:js && yarn lint:text",
-        "lint:js": "d2-style js check",
-        "lint:text": "d2-style text check"
+        "lint:js": "d2-style check js",
+        "lint:text": "d2-style check text"
     },
     "peerDependencies": {
         "prop-types": "^15"
     },
     "devDependencies": {
         "@dhis2/cli-app-scripts": "^7.6.6",
-        "@dhis2/cli-style": "7.2.1",
+        "@dhis2/cli-style": "^10.4.1",
         "jscodeshift": "^0.13.0",
         "jsdoc-to-markdown": "^6.0.1",
         "prop-types": "^15",

@@ -1,52 +1,49 @@
 import propTypes from 'prop-types'
 
-const isEmpty = value =>
+const isEmpty = (value) =>
     typeof value === 'undefined' || value === null || value === ''
 
-const requiredIfFactory = (condition, propType, isRequired) => (
-    props,
-    propName,
-    componentName
-) => {
-    const propValue = props[propName]
+const requiredIfFactory =
+    (condition, propType, isRequired) => (props, propName, componentName) => {
+        const propValue = props[propName]
 
-    // Usage errors
-    if (isRequired) {
-        return new Error(
-            `Property \`${propName}\` on component \`${componentName}\` is using the \`requiredIf\` prop-validator combined with \`.isRequired\`. This is an invalid combination.`
+        // Usage errors
+        if (isRequired) {
+            return new Error(
+                `Property \`${propName}\` on component \`${componentName}\` is using the \`requiredIf\` prop-validator combined with \`.isRequired\`. This is an invalid combination.`
+            )
+        }
+
+        if (typeof condition !== 'function') {
+            return new Error(
+                `The \`condition\` argument passed to the \`requiredIf\` prop-validator was not a function.`
+            )
+        }
+
+        if (typeof propType !== 'function') {
+            return new Error(
+                `The \`propType\` argument passed to the \`requiredIf\` prop-validator was not a function.`
+            )
+        }
+
+        // Validation errors
+        if (condition(props) && isEmpty(propValue)) {
+            return new Error(
+                `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is conditionally required but has value \`${propValue}\`. The condition that made this prop required is: \`${condition.toString()}\`.`
+            )
+        }
+
+        // This is how to programatically invoke a propTypes check
+        // https://github.com/facebook/prop-types#proptypescheckproptypes
+        propTypes.checkPropTypes(
+            { [propName]: propType },
+            props,
+            'prop',
+            componentName
         )
+
+        return null
     }
-
-    if (typeof condition !== 'function') {
-        return new Error(
-            `The \`condition\` argument passed to the \`requiredIf\` prop-validator was not a function.`
-        )
-    }
-
-    if (typeof propType !== 'function') {
-        return new Error(
-            `The \`propType\` argument passed to the \`requiredIf\` prop-validator was not a function.`
-        )
-    }
-
-    // Validation errors
-    if (condition(props) && isEmpty(propValue)) {
-        return new Error(
-            `Invalid prop \`${propName}\` supplied to \`${componentName}\`, this prop is conditionally required but has value \`${propValue}\`. The condition that made this prop required is: \`${condition.toString()}\`.`
-        )
-    }
-
-    // This is how to programatically invoke a propTypes check
-    // https://github.com/facebook/prop-types#proptypescheckproptypes
-    propTypes.checkPropTypes(
-        { [propName]: propType },
-        props,
-        'prop',
-        componentName
-    )
-
-    return null
-}
 
 /**
  * Ensure the prop has a value (i.e. treat it as required) when a given sibling prop
