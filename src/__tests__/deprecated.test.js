@@ -1,5 +1,5 @@
 import propTypes from 'prop-types'
-import { deprecated } from '../deprecated'
+import { deprecated } from '../deprecated.js'
 
 describe('deprecated', () => {
     jest.spyOn(console, 'error').mockImplementation(() => null)
