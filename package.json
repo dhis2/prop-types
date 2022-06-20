@@ -31,8 +31,8 @@
         "jscodeshift": "^0.13.0",
         "jsdoc-to-markdown": "^6.0.1",
         "prop-types": "^15",
-        "react": "^16.14.0",
-        "react-dom": "^16.14.0"
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
     },
     "files": [
         "build",
