@@ -29,7 +29,7 @@
         "@dhis2/cli-app-scripts": "^7.6.6",
         "@dhis2/cli-style": "^10.4.1",
         "jscodeshift": "^0.13.0",
-        "jsdoc-to-markdown": "^6.0.1",
+        "jsdoc-to-markdown": "^8.0.0",
         "prop-types": "^15",
         "react": "^16.14.0",
         "react-dom": "^16.14.0"
